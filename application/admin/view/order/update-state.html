@@ -1,0 +1,116 @@
+{include file="public/header" /}
+<body>
+<div class="x-body ">
+    <form  >
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单状态</label>
+            <div class="layui-input-block">
+                <select name="staur" id="status"  lay-filter="province" >
+                    <option value="1" {if $state == 1} selected {/if}>未付款</option>
+                    <option value="2" {if $state == 2} selected {/if} >已付款</option>
+                    <option value="3" {if $state == 3} selected {/if} >未发货</option>
+                    <option value="4" {if $state == 4} selected {/if} >已发货</option>
+                    <option value="5" {if $state == 5} selected {/if} >交易成功</option>
+                    <option value="6" {if $state == 6} selected {/if} >交易关闭</option>
+                </select>
+            </div>
+        </div>
+        <script>
+            $("#status").change(function(){
+                var s = $(this).val();
+                if(s == 4){
+                    $("#gs").show();
+                    $("#ddh").show();
+                }else {
+                    $("#gs").hide();
+                    $("#ddh").hide();
+                }
+            });
+            $(function () {
+                var s = $("#status").val();
+                if(s == 4){
+                    $("#gs").show();
+                    $("#ddh").show();
+                }
+            })
+        </script>
+        <div class="layui-form-item" hidden id="gs">
+            <label class="layui-form-label">快递公司</label>
+            <div class="layui-input-block">
+                <select name="gs" lay-verify="required"   {if $count == 1} disabled {/if}  id='gsxx'>
+                    <option value="zhongtong" {if 'zhongtong' == $wlInfo.name} selected {/if}>中通</option>
+                    <option value="yunda" {if 'yunda' == $wlInfo.name} selected {/if} >韵达</option>
+                    <option value="yuantong" {if 'yuantong' == $wlInfo.name} selected {/if} >圆通</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" hidden id="ddh">
+            <label class="layui-form-label">订单号</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" id="ddhx" {if $count == 1} disabled {/if} value="{$wlInfo.order_number}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+
+            <input type="button" class="layui-btn"   onclick="uodate_s('{$id}','{$count}')" value="修改">
+        </div>
+    </form>
+</div>
+
+<script>
+    function uodate_s(id,count) {
+        var s = $("#status").val();
+        var gs = $("#gsxx").val();
+        var ddhx = $("#ddhx").val();
+        if(s == 4){
+            $.ajax({
+                url:"{:url('admin/Order/xOrder')}",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    id:id,
+                    s:s,
+                    gs:gs,
+                    ddhx:ddhx,
+                    count:count
+                },
+                success:function (res) {
+                    if(res == 1){
+                        layer.alert('修改成功',function () {
+                            window.parent.location.reload();  //刷新父级页面
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前弹出层
+                            parent.layer.close(index);
+                        })
+                    }else {
+                        layer.msg('修改失败');
+                    }
+                }
+            });
+        }else {
+            $.ajax({
+                url:"{:url('admin/Order/sOrder')}",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    id:id,
+                    s:s
+                },
+                success:function (res) {
+                    if(res == 1){
+                      layer.alert('修改成功')
+                    }else {
+                      layer.msg('修改失败');
+                    }
+                }
+            });
+        }
+    }
+</script>
+
+
+</body>
+
+</html>

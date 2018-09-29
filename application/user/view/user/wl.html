@@ -1,0 +1,64 @@
+{include file="admin@public/header" /}
+<body>
+<div class="x-body ">
+    <div class="layui-card">
+        <div class="layui-card-header" style="color: #0a0a0a">物流信息</div>
+        <div class="layui-card-header"> 物流单号:<?php echo $wlinfo->nu?></div>
+        <div class="layui-card-body">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>信息</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="data" id="vo_data"}
+                <tr>
+                    <td><?php echo $vo_data->time?></td>
+                    <td> <?php echo $vo_data->context?></td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        <div style="padding-left: 30em">
+              {if $status === 5}
+            <button class="layui-btn layui-btn-normal">完成购物</button>
+            {else}
+             <button class="layui-btn layui-btn-normal" onclick="qrsh('{$id}')">确认收获</button>
+            {/if}
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function qrsh(id) {
+        layer.confirm('完成确定收获？',function(index){
+            $.ajax({
+                url:"{:url('user/user/harvest')}",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    id:id  //id
+                },
+                success:function (res) {
+                    if (res === 1){
+                        layer.alert("完成购物", {icon: 6},function () {
+                            window.parent.location.reload();  //刷新父级页面
+                        });
+                    }else {
+                        layer.alert("更新失败", {icon: 5});
+                    }
+                }
+            });
+
+        })
+    }
+</script>
+</html>

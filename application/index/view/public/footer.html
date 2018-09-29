@@ -1,0 +1,38 @@
+<div class="footer">
+    <div class="serverbox w clearfix"  style="margin-bottom: 12em">
+        <ul class="server-list clearfix">
+            {volist name= "helpCateRes" id="cate"}
+            <li class="item-first">
+                <h4>{$cate.cate_name}</h4>
+                {volist name="cate.arts" id="art"}
+                <a  href="{if condition ="$art['link_url']"} {$art.link_url}{else/}{:url('index/Article/index',array('id'=>$art['id']))}{/if}">{$art.title} </a>
+                {/volist}
+            </li>
+            {/volist}
+        </ul>
+        <div class="custom-service">
+            <h4>在线咨询</h4>
+            <span class="server-tel">{$confRes.zixuan}</span>
+            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$confRes.qq}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:{$confRes.qq}:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+
+        </div>
+    </div>
+
+    <div class="company-cr w-full">
+        <div class="company-info w clearfix">
+            <span class="copyright">COPYRIGHT 2018</span>
+
+            <span class="company-name">PHPMall</span>
+
+            <span class="company-icp"></span>
+
+            <div><a href="#" target="_blank">网站地图</a><a href="#" target="_blank">标签</a><a href="#" target="_blank">友情链接</a></div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<link href="/static/index/css/default_1.css" rel="stylesheet" type="text/css" />
+<script src="/static/index/js/artdialog_1.js"></script>
+<script src="/static/index/js/iframetools_1.js"></script>

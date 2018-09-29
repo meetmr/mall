@@ -1,0 +1,170 @@
+﻿{include file="public/header" /}
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">文章管理</a>
+        <a>
+          <cite>文章列表</cite>
+        </a>
+      </span>
+  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+    <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body" >
+  <xblock>
+
+    <button class="layui-btn" onclick="x_admin_show('添加文章','{:url(\'admin/Article/add\')}',800,550)"><i class="layui-icon"></i>添加</button>
+  </xblock>
+  <div class="container-wrap">
+    <div class="box-1">
+      <table class="layui-table">
+        <thead>
+        <tr>
+        <th style="text-align: center" width="30">ID</th>
+        <th style="text-align: center" width="100">标题</th>
+        <th style="text-align: center" width="40">所属栏目</th>
+        <th style="text-align: center" width="20">缩略图</th>
+          <th style="text-align: center" width="50" >跳转</th>
+          <th style="text-align: center" width="50" >顶置</th>
+          <th style="text-align: center" width="50" >显示状态</th>
+          <th style="text-align: center" width="50" >发布时间</th>
+        <th style="text-align: center" width="50">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      {volist name="articleInfo" id="info"}
+      <tr  style="text-align: center">
+        <td>{$info.id}</td>
+        <td>{$info.title|mb_substr=0,8,'utf-8'}</td>
+        <td>{$info.cate.cate_name}</td>
+        <td>
+          {if $info.thumb !=null}
+           <img src="/static/uploads/{$info.thumb}" width="40">
+          {else}
+          <span class="layui-badge layui-bg-gray">暂无缩略图</span>
+          {/if}
+        </td>
+        <td>{$info.link_url}</td>
+        <td>
+          {if $info.show_top == 1}
+          <button class="layui-btn layui-btn-xs" onclick="update_top(this,'{$info.id}','{$info.show_top}')" >置顶</button>
+          {else}
+          <button class="layui-btn layui-btn-primary layui-btn-xs" onclick="update_top(this,'{$info.id}','{$info.show_top}')">不置顶</button>
+          {/if}
+        </td>
+        <td>
+          {if $info.show_status == 1}
+          <button class="layui-btn layui-btn-xs" onclick="update_status(this,'{$info.id}','{$info.show_status}')" >启用</button>
+          {else}
+          <button class="layui-btn layui-btn-primary layui-btn-xs" onclick="update_status(this,'{$info.id}','{$info.show_status}')">禁用</button>
+          {/if}
+        </td>
+        <td>{$info.create_time|mb_substr=0,10,'utf-8'}</td>
+        <td>
+            <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"  onclick="x_admin_show('修改栏目','{:url(\'admin/Article/edit\',[\'id\'=>$info.id])}',800,550)"><i class="layui-icon layui-icon-edit"></i>编辑</a><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="delete_article(this,'{$info.id}','{$info.thumb}')"><i class="layui-icon layui-icon-delete"></i>删除</a>
+        </td>
+      </tr>
+      {/volist}
+      </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="page">
+    {$articleInfo|raw}
+  </div>
+  <script>
+      layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+          layer.photos({
+              photos: '#layer-photos-demo'
+              ,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+          });
+      });
+
+      layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          //执行一个laydate实例
+          laydate.render({
+              elem: '#start' //指定元素
+          });
+
+          //执行一个laydate实例
+          laydate.render({
+              elem: '#end' //指定元素
+          });
+      });
+      //更改是否置顶
+      function update_top(obj,id,status) {
+          layer.confirm('确定要更改状态吗？',function(index){
+              $.ajax({
+                   url:"{:url('/admin/Article/updateTop')}",
+                  type:"POST",
+                  dataType:"json",
+                  data:{
+                      id:id,  //id
+                      status:status,   //状态
+                      table:"article",
+                      value:"show_top"
+                  },
+                  success:function (res) {
+                    if (res === 1){
+                        layer.alert("更新成功", {icon: 6},function () {
+                            window.location.reload();  //刷新父级页面
+                        });
+                    }else {
+                        layer.alert("更新失败", {icon: 5});
+                    }
+                  }
+              });
+          });
+      }
+      //更改状态
+      function update_status(obj,id,status) {
+          layer.confirm('确定要更改状态吗？',function(index){
+              $.ajax({
+                  url:"{:url('/admin/Article/updateStatus')}",
+                  type:"POST",
+                  dataType:"json",
+                  data:{
+                      id:id,  //id
+                      status:status,   //状态
+                      table:"article",
+                      value:"show_status"
+                  },
+                  success:function (res) {
+                      if (res === 1){
+                          layer.alert("更新成功", {icon: 6},function () {
+                              window.location.reload();  //刷新父级页面
+                          });
+                      }else {
+                          layer.alert("更新失败", {icon: 5});
+                      }
+                  }
+              });
+          });
+      }
+      function delete_article(obj,id,img_path){
+          layer.confirm('确认要删除吗？',function(index){
+              $.ajax({
+                  url:"{:url('admin/Article/delete')}",
+                  type:"POST",
+                  dataType:"json",
+                  data:{
+                      id:id,  //id
+                      img_path:img_path
+                  },
+                  success:function (res) {
+                      if (res === 1){
+                          $(obj).parents("tr").remove();
+                          layer.msg('已删除!',{icon:1,time:1000});
+                      }else {
+                          layer.alert("更新失败", {icon: 5});
+                      }
+                  }
+              });
+          });
+      }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+﻿
+{include file='public/top'}
+
+	<!--头部-->
+	{include file='index@public/header'}
+
+<div id="member_content">
+	<div class="w clearfix">
+		{include file='public/mem_menu'}
+		<script src="/static/index/js/jquery.lavalamp.min.js"></script>
+		<script src="/static/layer/layer.js"></script>
+
+		<script>
+$(function(){
+	//边栏菜单的伸缩效果
+	$("#mem_menu h2").click(function(){
+		var sidebar_dd = $(this).next("ul");
+		if(!sidebar_dd.is(":animated")){
+			$(this).toggleClass("open");
+			sidebar_dd.slideToggle("slow");	
+		}	
+	});	
+	
+	//边栏菜单选中效果	
+	var crumbs_name='订单管理';
+	$(".sline li a").each(function(){			
+		var href_name=$.trim($(this).text());	
+		if(href_name==crumbs_name){				
+			 $(this).addClass('current');		 	 
+		}
+	});	 	
+	
+	//面包屑导航下划线滑动效果
+	if($('#top-tag')){
+		
+		$('#top-tag').lavalamp({
+			easing: 'easeOutBack'
+		});	
+		
+		var v =$('#top-tag li.on').index();
+		
+		var a = $('#top-tag').children('.lavalamp-item').eq(parseFloat(v)-1);		
+		$('#top-tag').data('lavalampActive',a).lavalamp('update');	
+	}
+});
+</script>
+		<div id="right_content">
+			<div id="member-nav" class="clearfix">
+				<ul id="top-tag" class="order-list">
+					<li class="fl  on " >
+							<a href="/member/order_member/index">
+								全部订单
+							</a>
+					</li>
+					<li class="fl ">
+						<a href="/member/order_member/status/status/3">待付款订单
+													</a>
+					</li>
+					<li class="fl ">
+						<a href="/member/order_member/status/status/4">待确认收货
+												</a>
+					</li>
+					<li class="fl ">
+						<a href="/member/order_member/status/status/6">待评价商品
+												</a>
+					</li>
+					
+				</ul>
+				<form action="/member/order_member/index" method="GET">								
+					<input value="" name="order_num" placeholder="输入订单编号" type="text">
+					<input value="" type="submit">
+			   	</form>
+			</div>
+
+			{if $count == 0}
+			<div id="empty">没有数据</div>
+			{else}
+			<div class="title">
+				<i class="i1">订单商品</i>
+				<i class="i2">收货人</i>
+				<i class="i3">金额</i>
+				<i class="i4">关闭时间</i>
+				<i class="i5">
+					<div class="select" style="width:86px">
+						<p>
+							全部状态
+						</p>
+						<ul>
+							<li value="1"><a href="/member/order_member/index">全部状态</a></li>
+							<li value="2"><a href="/member/order_member/status/status/3">等待付款</a></li>
+							<li value="3"><a href="/member/order_member/status/status/4">等待收货</a></li>
+							<li value="4"><a href="/member/order_member/status/status/7">已完成</a></li>
+							<li value="5"><a href="/member/order_member/status/status/5">已取消</a></li>
+						</ul>
+					</div>
+				</i>
+				<i class="i6">交易操作</i>
+			</div>
+			{volist name="order" id="vo_order"}
+			<div class="boxorder">
+				<div class="number gray">
+					订单编号：{$vo_order.order_id}
+					下单时间：{$vo_order.create_time}  </div>
+				<table>
+					<tbody>
+					<tr><?php $goods = json_decode($vo_order['goods_item']) ;?>
+						<?php $address = json_decode($vo_order['address']) ;?>
+						<td class="t1">
+							{volist name="goods" id="vo_goods"}
+							<?php $goodsss = $vo_goods->goods?><br>
+							<?php $id = ($goodsss->id);?>
+							<a class="img60" href="{:url('index/Goods/index',array('id'=>$id))}" target="_blank">
+								<img src="/static/uploads/<?php echo $goodsss->og_thumb?>">
+								{/volist}
+						</td>
+						<td class="t2"><?php echo $address->name;?></td>
+						<td class="t3">
+							<i class="redprice oof">
+								¥ {$vo_order.payment}
+							</i>
+						</td>
+						<td class="t4">
+
+							{switch $vo_order.status }
+							{case 1 }
+							<span class="close endtime" value="<?php echo ($vo_order['close_time']);?>">
+							{/case}
+							{case 2}
+								<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
+							<span class="green">付款成功</span>
+							{/case}
+							{case 3}
+							<span class="green">未发货</span>
+							{/case}
+							{case 4}
+							<span class="green">已发货</span>
+							{/case}
+							{case 5}
+							<span class="green">交易成功</span>
+							{/case}
+							{case 6}
+							<a class="blue">订单关闭</a>
+							{/case}
+							{default /}默认情况
+							{/switch}
+
+						</td>
+						<td class="t5">
+							{switch $vo_order.status }
+							{case 1 }
+							<span class="green">待付款</span>
+							{/case}
+							{case 2}
+							<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
+							<span class="green">付款成功</span>
+							{/case}
+							{case 3}
+							<span class="green">未发货</span>
+							{/case}
+							{case 4}
+							<span class="green">已发货</span>
+							{/case}
+							{case 5}
+							<span class="green">交易成功</span>
+							{/case}
+							{case 6}
+							<span class="green">取消订单</span>
+							{/case}
+							{default /}默认情况
+							{/switch}
+
+							<br><a href="{:url('user/order/show_Order',array('id'=>$vo_order.order_id))}" target="_blank" class="gray">订单详情</a>
+						</td>
+						<td class="t6 start" value="{$vo_order.id}" id="start{$vo_order.id}">
+							{switch $vo_order.status }
+							{case 1 }
+							<a href="{:url('user/order/showOrder',array('id'=>$vo_order.order_id))}" class="pointer re_pay buttonred">去支付</a>
+							<a onclick="cancelOrder('{$vo_order.order_id}')" class="pointer cancel_order">取消订单</a>
+							{/case}
+							{case 2}
+							<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
+							<span class="green">付款成功</span>
+							{/case}
+							{case 3}
+							<span class="green">未发货</span>
+							{/case}
+							{case 4}
+							<a class="green" style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/logisticsInfo\')}?id='+{$vo_order.id},600,600)">查看物流信息</a>
+							{/case}
+							{case 5}
+							<a class="green" style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/logisticsInfo\')}?id='+{$vo_order.id},600,600)">交易成功</a>
+
+							{/case}
+							{case 6}
+							<a class="blue">交易关闭</a>
+							{/case}
+							{default /}默认情况
+							{/switch}
+
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			{/volist}
+			{/if}
+			<div class="page"></div>
+						
+		</div>
+	</div>
+</div>
+	{include file='index@public/footer'}
+</body>
+<script type="text/javascript">
+    function x_admin_show(title,url,w,h){
+        if (title == null || title == '') {
+            title=false;
+        };
+        if (url == null || url == '') {
+            url="404.html";
+        };
+        if (w == null || w == '') {
+            w=($(window).width()*0.9);
+        };
+        if (h == null || h == '') {
+            h=($(window).height() - 50);
+        };
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade:0.4,
+            title: title,
+            content: url
+        });
+    }
+
+    $(function(){
+        setInterval(function(){
+            $(".endtime").each(function(){
+                var obj = $(this);
+                var endTime = obj.attr('value');
+          		 var timestamp = Date.parse(new Date());
+                var nMS= (endTime-(timestamp/1000)) * 1000;
+                var myD=Math.floor(nMS/(1000 * 60 * 60 * 24)); //天
+                var myH=Math.floor(nMS/(1000*60*60)) % 24; //小时
+                var myM=Math.floor(nMS/(1000*60)) % 60; //分钟
+                var myS=Math.floor(nMS/1000) % 60; //秒
+                if(myD>= 0){
+                    var str = myD+"天"+myH+"小时"+myM+"分"+myS+"秒";
+                }else{
+                    var str = "订单关闭！";
+                }
+                obj.html(str);
+            });
+        }, 1000); //每个0.1秒执行一次
+    });
+
+    // 取消订单
+    function cancelOrder(order_id){
+
+        $.ajax({
+            url:"{:url('user/order/cancelOrder')}",
+            type:"POST",
+            dataType:"json",
+            data:{
+                order_id:order_id
+            },
+            success:function (res) {
+				if(res == 1){
+                    layer.alert('订单取消成功',function () {
+                        window.location.reload();  //刷新父级页面
+                    });
+				}
+            }
+        });
+	}
+    // $(function(){
+    //     setInterval(function(){
+    //         $(".start").each(function(){
+    //             var obj = $(this);
+    //             var order_id = obj.attr('value');
+    //             $.ajax({
+    //                 url:"{:url('user/order/invalidOrder')}",
+    //                 type:"POST",
+    //                 dataType:"json",
+    //                 data:{
+    //                     order_id:order_id
+    //                 },
+    //                 success:function (res) {
+	//
+    //                 }
+    //             });
+	//
+    //         });
+    //     }, 1000); //每个0.1秒执行一次
+    // });
+</script>
+
+</html>
