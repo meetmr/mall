@@ -11,7 +11,7 @@
 
 use think\facade\Route;
 // 分类
-Route::get('category/:id','index/Categorys/index',['ext'=>'html|htm'],['id'=>'\d{1,5}']);
+Route::get('category/:id','index/categorys/index',['ext'=>'html|htm'],['id'=>'\d{1,5}']);
 // 栏目
 Route::get('column/:id','index/Column/index',['ext'=>'html|htm'],['id'=>'\d{1,5}']);
 

@@ -1,38 +1,32 @@
-<div class="footer">
-    <div class="serverbox w clearfix"  style="margin-bottom: 12em">
-        <ul class="server-list clearfix">
-            {volist name= "helpCateRes" id="cate"}
-            <li class="item-first">
-                <h4>{$cate.cate_name}</h4>
-                {volist name="cate.arts" id="art"}
-                <a  href="{if condition ="$art['link_url']"} {$art.link_url}{else/}{:url('index/Article/index',array('id'=>$art['id']))}{/if}">{$art.title} </a>
-                {/volist}
-            </li>
-            {/volist}
-        </ul>
-        <div class="custom-service">
-            <h4>在线咨询</h4>
-            <span class="server-tel">{$confRes.zixuan}</span>
-            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$confRes.qq}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:{$confRes.qq}:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
-
+<div id="footer" class="footer">
+    <div class="footer_cont">
+        <div class="footer_help_nav">
+            <ul>
+                <li><a href="/pc/help?shopId=2&pf=pc.pay.zh&m=pay" title="支付方式" class="f_icon f_icon_zffs">支付方式</a><span class="vertical_line"></span></li>
+                <li><a href="/pc/help?shopId=2&pf=pc.pay.zh&m=buy" title="购买指引" class="f_icon f_icon_gmzy">购买指引</a><span class="vertical_line"></span></li>
+                <li><a href="/pc/help?shopId=2&pf=pc.pay.zh&m=service" title="售后服务" class="f_icon f_icon_shfw">售后服务</a><span class="vertical_line"></span></li>
+                <li><a href="/pc/help?shopId=2&pf=pc.pay.zh&m=deliver" title="配送方式" class="f_icon f_icon_psfs">配送方式</a><span class="vertical_line"></span></li>
+                <li><a href="/pc/help?shopId=2&pf=pc.pay.zh&m=about" title="积分规则" class="f_icon f_icon_gyjf">积分规则</a></li>
+            </ul>
         </div>
-    </div>
-
-    <div class="company-cr w-full">
-        <div class="company-info w clearfix">
-            <span class="copyright">COPYRIGHT 2018</span>
-
-            <span class="company-name">PHPMall</span>
-
-            <span class="company-icp"></span>
-
-            <div><a href="#" target="_blank">网站地图</a><a href="#" target="_blank">标签</a><a href="#" target="_blank">友情链接</a></div>
+        <div class="footer_nav">
+            <ul>
+                <li>
+                    <a href="/pc/term?shopId=&pf=pc.pay.zh" title="服务条款">服务条款</a>
+                    <span class="vertical_line"></span>
+                </li>
+                <li>
+                    <a href="http://www.tencent.com/zh-cn/le/copyrightstatement.shtml" title="法律声明" target="_blank">法律声明</a>
+                    <span class="vertical_line"></span>
+                </li>
+                <li>
+                    <a href="http://support.qq.com/write.shtml?fid=1171" target="_blank" title="我要反馈">我要反馈</a>
+                </li>
+            </ul>
         </div>
-
+        <div class="copyright">&copy;2018 腾讯公司 版权所有  ICP许可证：粤 1546522455655</div>
     </div>
 </div>
-
-</body>
-<link href="/static/index/css/default_1.css" rel="stylesheet" type="text/css" />
-<script src="/static/index/js/artdialog_1.js"></script>
-<script src="/static/index/js/iframetools_1.js"></script>
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script type="text/javascript" src="/static/index/js/index.dc17b2ec.js"></script>

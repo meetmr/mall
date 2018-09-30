@@ -171,4 +171,44 @@ class Goods extends BaseModel
         }
         return $goods;
     }
+
+    // 获取人气热销分类下的商品
+    public static function getHotSale($count){
+        $goods =  self::where(['recommend_id'=>11])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+        foreach ($goods as $item) {
+            $item['images'] = getGoodsImg($item['id']);
+            // 查询商品相册
+        }
+        return $goods;
+    }
+
+    // 获取新品尝鲜分类下的商品
+    public static function getNewProductGoods($count){
+        $goods =  self::where(['recommend_id'=>12])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+        foreach ($goods as $item) {
+            $item['images'] = getGoodsImg($item['id']);
+            // 查询商品相册
+        }
+        return $goods;
+    }
+
+    // 获取为你推荐分类下的商品
+    public static function getRecommendGoods($count){
+        $goods =  self::where(['recommend_id'=>13])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+        foreach ($goods as $item) {
+            $item['images'] = getGoodsImg($item['id']);
+            // 查询商品相册
+        }
+        return $goods;
+    }
+
+    // 获取为购物车推荐的商品
+    public static function getCratGoods($count){
+        $goods =  self::where(['recommend_id'=>14])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+        foreach ($goods as $item) {
+            $item['images'] = getGoodsImg($item['id']);
+            // 查询商品相册
+        }
+        return $goods;
+    }
 }

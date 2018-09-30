@@ -1,0 +1,7 @@
+<div id="slider" class="banner-wrap">
+    <ul class="banner-list">
+        {volist name="roadcast" id="roadcast"}
+        <li class="banner-item"><a title="{$roadcast.name}" href="{:url('index/Goods/index',array('id'=>$roadcast.good_id))}"  target="_blank"><img alt="{$roadcast.name}" src="/static/uploads/{$roadcast.img_path}" ></a></li>
+        {/volist}
+    </ul>
+</div>

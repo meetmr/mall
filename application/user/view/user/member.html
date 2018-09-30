@@ -1,217 +1,187 @@
-﻿
-{include file='public/top'}
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>我的订单-个人中心-PHPmall</title>
+	<meta name="Copyright" content="{$confRes.miaoshu}"/>
+	<meta name="Keywords" content="{$confRes.sitename}"/>
+	<meta name="Description" content="{$confRes.miaoshu}"/>
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-error.6583439e.css">
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-buy-process.c1a2f440.css">
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-personal-order.6f6355da.css">
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+	<script src="/static/layer/layer.js"></script>
+</head>
+<body>
+<div id="header" class="header">
+	<!--个人状态-->
+	{include file="index@public/topmenu"}
+	<!--个人状态end-->
+	<!--导航栏-->
+	{include file="index@public/topnav"}
+	<!--导航栏end-->
 
-	<!--头部-->
-	{include file='index@public/header'}
+</div>
 
-<div id="member_content">
-	<div class="w clearfix">
-		{include file='public/mem_menu'}
-		<script src="/static/index/js/jquery.lavalamp.min.js"></script>
-		<script src="/static/layer/layer.js"></script>
-
-		<script>
-$(function(){
-	//边栏菜单的伸缩效果
-	$("#mem_menu h2").click(function(){
-		var sidebar_dd = $(this).next("ul");
-		if(!sidebar_dd.is(":animated")){
-			$(this).toggleClass("open");
-			sidebar_dd.slideToggle("slow");	
-		}	
-	});	
-	
-	//边栏菜单选中效果	
-	var crumbs_name='订单管理';
-	$(".sline li a").each(function(){			
-		var href_name=$.trim($(this).text());	
-		if(href_name==crumbs_name){				
-			 $(this).addClass('current');		 	 
-		}
-	});	 	
-	
-	//面包屑导航下划线滑动效果
-	if($('#top-tag')){
-		
-		$('#top-tag').lavalamp({
-			easing: 'easeOutBack'
-		});	
-		
-		var v =$('#top-tag li.on').index();
-		
-		var a = $('#top-tag').children('.lavalamp-item').eq(parseFloat(v)-1);		
-		$('#top-tag').data('lavalampActive',a).lavalamp('update');	
-	}
-});
-</script>
-		<div id="right_content">
-			<div id="member-nav" class="clearfix">
-				<ul id="top-tag" class="order-list">
-					<li class="fl  on " >
-							<a href="/member/order_member/index">
-								全部订单
-							</a>
-					</li>
-					<li class="fl ">
-						<a href="/member/order_member/status/status/3">待付款订单
-													</a>
-					</li>
-					<li class="fl ">
-						<a href="/member/order_member/status/status/4">待确认收货
-												</a>
-					</li>
-					<li class="fl ">
-						<a href="/member/order_member/status/status/6">待评价商品
-												</a>
-					</li>
-					
-				</ul>
-				<form action="/member/order_member/index" method="GET">								
-					<input value="" name="order_num" placeholder="输入订单编号" type="text">
-					<input value="" type="submit">
-			   	</form>
-			</div>
-
-			{if $count == 0}
-			<div id="empty">没有数据</div>
-			{else}
-			<div class="title">
-				<i class="i1">订单商品</i>
-				<i class="i2">收货人</i>
-				<i class="i3">金额</i>
-				<i class="i4">关闭时间</i>
-				<i class="i5">
-					<div class="select" style="width:86px">
-						<p>
-							全部状态
-						</p>
-						<ul>
-							<li value="1"><a href="/member/order_member/index">全部状态</a></li>
-							<li value="2"><a href="/member/order_member/status/status/3">等待付款</a></li>
-							<li value="3"><a href="/member/order_member/status/status/4">等待收货</a></li>
-							<li value="4"><a href="/member/order_member/status/status/7">已完成</a></li>
-							<li value="5"><a href="/member/order_member/status/status/5">已取消</a></li>
-						</ul>
+<div class="content">
+	<div class="personal">
+		<div class="personal-header">
+			<h2 class="title">个人中心 - 我的订单</h2>
+		</div>
+		<div class="personal-body">
+				{include file="public/mem_menu"}
+			<div class="personal-main">
+				<div class="orders pending">
+					<div class="orders-header">
+						<p class="orders-header-title">待处理订单</p>
+						<table class="orders-header-table">
+							<thead>
+							<tr>
+								<th class="order-info">商品信息</th>
+								<th class="order-price">实付款（元）</th>
+								<th class="order-price">关闭时间</th>
+								<th class="order-operate">操作</th>
+							</tr>
+							</thead>
+						</table>
 					</div>
-				</i>
-				<i class="i6">交易操作</i>
-			</div>
-			{volist name="order" id="vo_order"}
-			<div class="boxorder">
-				<div class="number gray">
-					订单编号：{$vo_order.order_id}
-					下单时间：{$vo_order.create_time}  </div>
-				<table>
-					<tbody>
-					<tr><?php $goods = json_decode($vo_order['goods_item']) ;?>
-						<?php $address = json_decode($vo_order['address']) ;?>
-						<td class="t1">
-							{volist name="goods" id="vo_goods"}
-							<?php $goodsss = $vo_goods->goods?><br>
-							<?php $id = ($goodsss->id);?>
-							<a class="img60" href="{:url('index/Goods/index',array('id'=>$id))}" target="_blank">
-								<img src="/static/uploads/<?php echo $goodsss->og_thumb?>">
-								{/volist}
-						</td>
-						<td class="t2"><?php echo $address->name;?></td>
-						<td class="t3">
-							<i class="redprice oof">
-								¥ {$vo_order.payment}
-							</i>
-						</td>
-						<td class="t4">
 
-							{switch $vo_order.status }
-							{case 1 }
-							<span class="close endtime" value="<?php echo ($vo_order['close_time']);?>">
-							{/case}
-							{case 2}
+					{volist name="order" id="vo_order"}
+					<div class="order order-detail">
+						<div class="order-header">
+							<p class="order-date num">{$vo_order.create_time}</p>
+							<p class="order-code">订单编号：<span class="num">{$vo_order.order_id}</span></p>
+							<p class="order-status">
+								{switch $vo_order.status }
+								{case 1 }
+								<span class="green">待付款</span>
+								{/case}
+								{case 2}
 								<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
-							<span class="green">付款成功</span>
-							{/case}
-							{case 3}
-							<span class="green">未发货</span>
-							{/case}
-							{case 4}
-							<span class="green">已发货</span>
-							{/case}
-							{case 5}
-							<span class="green">交易成功</span>
-							{/case}
-							{case 6}
-							<a class="blue">订单关闭</a>
-							{/case}
-							{default /}默认情况
-							{/switch}
+								<span class="green" style="color:#28ac17;">付款成功</span>
+								{/case}
+								{case 3}
+								<span class="green">未发货</span>
+								{/case}
+								{case 4}
+								<span class="green">已发货</span>
+								{/case}
+								{case 5}
+								<span class="green">交易成功</span>
+								{/case}
+								{case 6}
+								<span class="green">取消订单</span>
+								{/case}
+								{default /}默认情况
+								{/switch}
+							</p>
 
-						</td>
-						<td class="t5">
-							{switch $vo_order.status }
-							{case 1 }
-							<span class="green">待付款</span>
-							{/case}
-							{case 2}
-							<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
-							<span class="green">付款成功</span>
-							{/case}
-							{case 3}
-							<span class="green">未发货</span>
-							{/case}
-							{case 4}
-							<span class="green">已发货</span>
-							{/case}
-							{case 5}
-							<span class="green">交易成功</span>
-							{/case}
-							{case 6}
-							<span class="green">取消订单</span>
-							{/case}
-							{default /}默认情况
-							{/switch}
+						</div>
+						<table class="order-detail-table clearfix">
+							<thead>
+							<tr>
+								<th class="order-info">商品信息</th>
+								<th class="order-price">实付款（元）</th>
+								<th class="order-price">关闭时间</th>
 
-							<br><a href="{:url('user/order/show_Order',array('id'=>$vo_order.order_id))}" target="_blank" class="gray">订单详情</a>
-						</td>
-						<td class="t6 start" value="{$vo_order.id}" id="start{$vo_order.id}">
-							{switch $vo_order.status }
-							{case 1 }
-							<a href="{:url('user/order/showOrder',array('id'=>$vo_order.order_id))}" class="pointer re_pay buttonred">去支付</a>
-							<a onclick="cancelOrder('{$vo_order.order_id}')" class="pointer cancel_order">取消订单</a>
-							{/case}
-							{case 2}
-							<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
-							<span class="green">付款成功</span>
-							{/case}
-							{case 3}
-							<span class="green">未发货</span>
-							{/case}
-							{case 4}
-							<a class="green" style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/logisticsInfo\')}?id='+{$vo_order.id},600,600)">查看物流信息</a>
-							{/case}
-							{case 5}
-							<a class="green" style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/logisticsInfo\')}?id='+{$vo_order.id},600,600)">交易成功</a>
+								<th class="order-operate">操作</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<?php $goods = json_decode($vo_order['goods_item']) ;?>
+								<?php $address = json_decode($vo_order['address']) ;?>
+								<td class="order-info">
+									<div class="product cf">
+										{volist name="goods" id="vo_goods"}
+										<?php $goodsss = $vo_goods->goods?><br>
+										<?php $id = ($goodsss->id);?>
+										<img width="50" style="float: left" src="/static/uploads/<?php echo $goodsss->og_thumb?>" alt="<?php echo $address->name;?>">
+										{/volist}
+									</div>
+								</td>
 
-							{/case}
-							{case 6}
-							<a class="blue">交易关闭</a>
-							{/case}
-							{default /}默认情况
-							{/switch}
+								<td class="order-price" rowspan="2">
+									<p class="order-price-num num">￥{$vo_order.payment}</p>
+									<p class="order-price-ship">
+										（包邮）
+									</p>
+								</td>
+								<td class="order-price" rowspan="2">
+									{switch $vo_order.status }
+									{case 1 }
+									<span class="close endtime" value="<?php echo ($vo_order['close_time']);?>"></span>
+									{/case}
+									{case 2}
+									<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
+									<span class="green">付款成功</span>
+									{/case}
+									{case 3}
+									<span class="green">未发货</span>
+									{/case}
+									{case 4}
+									<span class="green">已发货</span>
+									{/case}
+									{case 5}
+									<span class="green">交易成功</span>
+									{/case}
+									{case 6}
+									<a class="blue">订单关闭</a>
+									{/case}
+									{default /}默认情况
+									{/switch}
 
-						</td>
-					</tr>
-					</tbody>
-				</table>
+								</td>
+								<td class="order-operate" rowspan="2">
+									{switch $vo_order.status }
+									{case 1 }
+									<a href="{:url('user/order/showOrder',array('id'=>$vo_order.order_id))}" class="order-operator btn go-pay btn-normal btn-green">去支付</a>
+									<p><a style="cursor: pointer" class="order-operator cancel" onclick="cancelOrder('{$vo_order.order_id}')" >取消订单</a></p>
+									{/case}
+									{case 2}
+									<!--订单状态。1、未付款 2、已付款 3、未发货  4、已发货 5、交易成功 6、交易关闭-->
+									<span class="green">付款成功</span>
+									{/case}
+									{case 3}
+									<span class="green">未发货</span>
+									{/case}
+									{case 4}
+									<a class="green" style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/logisticsInfo\')}?id='+{$vo_order.id},600,600)">查看物流信息</a>
+									{/case}
+									{case 5}
+									<a class="green" style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/logisticsInfo\')}?id='+{$vo_order.id},600,600)">交易成功</a>
+
+									{/case}
+									{case 6}
+									<a class="blue">交易关闭</a>
+									{/case}
+									{default /}默认情况
+									{/switch}
+
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					{/volist}
+				</div>
+
 			</div>
-			{/volist}
-			{/if}
-			<div class="page"></div>
-						
 		</div>
 	</div>
 </div>
-	{include file='index@public/footer'}
-</body>
-<script type="text/javascript">
+
+
+
+<!--尾部-->
+{include file="index@public/footer"}
+<!--尾部end-->
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script>
     function x_admin_show(title,url,w,h){
         if (title == null || title == '') {
             title=false;
@@ -242,7 +212,7 @@ $(function(){
             $(".endtime").each(function(){
                 var obj = $(this);
                 var endTime = obj.attr('value');
-          		 var timestamp = Date.parse(new Date());
+                var timestamp = Date.parse(new Date());
                 var nMS= (endTime-(timestamp/1000)) * 1000;
                 var myD=Math.floor(nMS/(1000 * 60 * 60 * 24)); //天
                 var myH=Math.floor(nMS/(1000*60*60)) % 24; //小时
@@ -257,10 +227,8 @@ $(function(){
             });
         }, 1000); //每个0.1秒执行一次
     });
-
     // 取消订单
     function cancelOrder(order_id){
-
         $.ajax({
             url:"{:url('user/order/cancelOrder')}",
             type:"POST",
@@ -269,34 +237,16 @@ $(function(){
                 order_id:order_id
             },
             success:function (res) {
-				if(res == 1){
+                if(res == 1){
                     layer.alert('订单取消成功',function () {
                         window.location.reload();  //刷新父级页面
                     });
-				}
+                }
             }
         });
-	}
-    // $(function(){
-    //     setInterval(function(){
-    //         $(".start").each(function(){
-    //             var obj = $(this);
-    //             var order_id = obj.attr('value');
-    //             $.ajax({
-    //                 url:"{:url('user/order/invalidOrder')}",
-    //                 type:"POST",
-    //                 dataType:"json",
-    //                 data:{
-    //                     order_id:order_id
-    //                 },
-    //                 success:function (res) {
-	//
-    //                 }
-    //             });
-	//
-    //         });
-    //     }, 1000); //每个0.1秒执行一次
-    // });
+    }
 </script>
 
+<script type="text/javascript" src="/static/index/js/order.f859174f.js"></script>
+</body>
 </html>

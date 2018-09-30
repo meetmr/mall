@@ -1,51 +1,77 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>PHPMall-用户注册</title>
-    <link rel="stylesheet" href="/static/login/css/base_1.css"/>
-    <link rel="stylesheet" href="/static/login/css/register.css"/>
-    <script src="/static/index/js/jquery-2.1.4.min_1.js"></script>
-    <script src="/static/layer/layer.js"></script>
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>用户登录</title>
+  <link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-login.d09e1d82.css">
+  <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+  <script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  <script src="/static/layer/layer.js"></script>
 </head>
 <body>
-<div id="main">
-    <div id="header">
-    </div>
-    <div class="container">
-        <div class="bgPic"><img src="/static/login/picture/b2_1.jpg" alt=""/></div>
-        <div class="register">
-            <div class="title">
-                <span>注册</span>
-                <a href="{:url('user/Login/login')}">去登录</a>
-            </div>
-            <form autocomplete="off" >
-                <div class="default">
-                    <input id="uname" name="uname" data-form="uname" type="text" placeholder="用户名"  />
+<div class="content">
+  <div class="content-wrapper cf">
+    <div class="login-container independent-password">
+      <div class="login-box second-login-box">
+        <div style="border: 2px solid #eee;height:376px; width: 376px; " >
+          <div class="site-text site-block">
+            <div class="title" id="title_2" style="font-size: 18px;text-align: center;margin-top: 30px;">账号注册</div>
+            <form style="margin-top: 2em">
+              <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-block">
+                  <input type="text"id="uname" name="uname" required=""  placeholder="用户名" class="layui-input" style="width: 200px;">
                 </div>
-                <div class="default">
-                    <input id="email" name="email" data-form="email" type="text" placeholder="邮箱" />
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                  <input type="text"  id="email" name="email" required="" placeholder="邮箱"   class="layui-input" style="width: 200px;">
                 </div>
-                <div class="default">
-                    <input id="upwd" name="upwd" data-form="upwd" type="password" placeholder="请输入6-16为密码" />
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                  <input type="password" id="upwd" name="upwd" required=""  placeholder="请输入6-16为密码" class="layui-input" style="width: 200px;">
                 </div>
-                <div class="default">
-                    <input id="upwd_2" data-form="upwd_2" type="password" placeholder="确认密码" />
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-block">
+                  <input type="password"  id="upwd_2" data-form="upwd_2"  placeholder="确认密码" required=""  class="layui-input" style="width: 200px;">
                 </div>
-
-                <div class="submit">
-                        <span class="notice">点击"注册"代表您同意遵守
-                            <a href="#">用户协议</a>
-                            和
-                            <a href="#">隐私条款</a>
-                        </span>
-                    <button type="button" class="s_hover" onclick="reg()">注册</button>
+              </div>
+              <div class="layui-form-item" style="margin-top: 20px;">
+                <div class="layui-input-block">
+                  <button class="layui-btn layui-btn-fluid"  onclick="reg()"  type="button" style="width: 200px;">注册</button>
                 </div>
+              </div>
             </form>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="login-pictures">
+      <div class="logo">
+        <a href="javascript:;">
+          <img src="/static/index/picture/login.png" alt="PHPmall" width="50">
+        </a>
+      </div>
+
+    </div>
+  </div>
 </div>
+<div class="footer login">
+  <div class="footer_cont">
+    <p><span class="copyright">Copyright © 2018 王恒兵</span></p>
+  </div>
+</div>
+
+<script type="text/javascript" src="/static/layui/layui.js" charset="UTF-8"></script>
+
 <script>
+
     function reg() {
         // 用户名
         var uname = $("#uname").val();
@@ -103,6 +129,8 @@
         },"json")
 
     }
+
+
 </script>
 </body>
 </html>

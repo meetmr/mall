@@ -41,4 +41,17 @@ class Category extends BaseModel
         return self::where('id','=',$c_id)->field('id,cate_name')->find();
     }
 
+    // 传入商品id 获取顶级ID下面的所有分类
+    public static function getGoodsCategoryInfoDingji($c_id){
+        $p_id =  self::where('id','=',$c_id)->value('pid');
+        if($p_id == 0){
+            $p_id = $c_id;
+        }
+        $dj =  self::where('id','=',$p_id)->field('id,cate_name')->find();
+        $cate =  self::where('pid','=',$p_id)->field('id,cate_name')->select();
+        $cate['dj'] = $dj;
+        return $cate;
+    }
+
+
 }

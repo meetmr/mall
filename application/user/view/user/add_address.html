@@ -1,77 +1,52 @@
-﻿
-{include file='public/top'}
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>管理收货地址-个人中心-PHPMall</title>
+	<meta name="Copyright" content="{$confRes.miaoshu}"/>
+	<meta name="Keywords" content="{$confRes.sitename}"/>
+	<meta name="Description" content="{$confRes.miaoshu}"/>
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-personal-address.39815a20.css">
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+	<script src="/static/layer/layer.js"></script>
+</head>
+<body>
 
-<!--头部-->
-{include file='index@public/header'}
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 id="modalTitle" class="title">新增收货地址</h4>
+		<i class="icon_close"></i>
+	</div>
+	<div class="modal-body">
+		<form id="addressForm" class="add-address-form" novalidate="novalidate">
+			<input type="hidden" id="addressId" name="id">
 
-<div id="member_content">
-	<div class="w clearfix">
-		{include file='public/mem_menu'}
-
-		<script src="static/js/jquery.lavalamp.min.js"></script>
-<script>
-$(function(){
-	//边栏菜单的伸缩效果
-	$("#mem_menu h2").click(function(){
-		var sidebar_dd = $(this).next("ul");
-		if(!sidebar_dd.is(":animated")){
-			$(this).toggleClass("open");
-			sidebar_dd.slideToggle("slow");	
-		}	
-	});	
-	
-	//边栏菜单选中效果	
-	var crumbs_name='收货地址';
-	$(".sline li a").each(function(){			
-		var href_name=$.trim($(this).text());	
-		if(href_name==crumbs_name){				
-			 $(this).addClass('current');		 	 
-		}
-	});	 	
-	
-	//面包屑导航下划线滑动效果
-	if($('#top-tag')){
-		
-		$('#top-tag').lavalamp({
-			easing: 'easeOutBack'
-		});	
-		
-		var v =$('#top-tag li.on').index();
-		
-		var a = $('#top-tag').children('.lavalamp-item').eq(parseFloat(v)-1);		
-		$('#top-tag').data('lavalampActive',a).lavalamp('update');	
-	}
-});	
-
-</script>
-		<div id="right_content">
-			<div id="member-nav" class="clearfix">
-				<ul id="top-tag" class="order-list">
-					<li class="fl">						
-						<a href="{:url('user/user/Address')}">收货地址</a>
-					</li>		
-					<li class="fl on">
-						<a  href="{:url('user/user/addAddress')}"  style="color:red;">新增地址</a>
-
-					</li>			
-				</ul>
+			<div class="row cf">
+				<div class="meta">
+					<label for="consName">收件人</label>
+				</div>
+				<div class="meta-value">
+					<input type="text"id="name" name="cons_name" maxlength="8">
+				</div>
 			</div>
-			<ul class="form">
-				<li>
-					<span>收货人</span>
-					<input name="name" class="text" placeholder="收货人姓名" id="name"  value="" type="text">
-				</li>
-				<li><span>手机号码</span>
-					<input name="telephone" class="text" placeholder="手机号码" value="" id="province" type="text">
-				</li>
-				<li>
-					<span>收货地址</span>
-					<input name="address" class="text" placeholder="收货地址" value="" type="text" id="detailed">
-				</li>
-				<li>
-					<span>区域</span>
+			<div class="row cf">
+				<div class="meta">
+					<label for="consPhone">手机号码</label>
+				</div>
+				<div class="meta-value">
+					<input type="text" id="province" name="cons_phone" maxlength="11">
+				</div>
+			</div>
+			<div class="row cf">
+				<div class="meta">
+					<label for="city-select">地区选择</label>
+				</div>
+				<div id="js_city-select" class="meta-value">
+
 					<p id="area">
-				        <select name="city" id="city" class="second-level" >
+						<select name="city" id="city" class="second-level" >
 							<option value="">请选择</option>
 							{volist name='list_city' id='vo'}
 							<option value="{$vo.region_id}">{$vo.region_name}</option>
@@ -84,12 +59,26 @@ $(function(){
 							<option value="">请选择</option>
 						</select>
 					</p>
-				</li>
-				<li><span> </span> <button type="button" onclick="addAddress()" style="margin-left:100px;" id="send">提交</button></li>
-			</ul>
+				</div>
+			</div>
+			<div class="row cf">
+				<div class="meta">
+					<label for="consAddr">详细地址</label>
+				</div>
+				<div class="meta-value">
+					<input type="text" id="detailed" name="cons_addr" maxlength="64">
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<div class="modal-footer">
+		<div class="buttons">
+			<button type="button" onclick="addAddress()"  class="btn btn-big btn-green btn-commit">确认</button>
 		</div>
 	</div>
 </div>
+
 <script>
     $(".second-level").change(function () {
         var region_id = $(this).val();
@@ -129,7 +118,7 @@ $(function(){
         if(name === ''){
             layer.msg('请输入收货人姓名');
             return;
-		}
+        }
         if(province === ''){
             layer.msg('请输入电话号码');
             return;
@@ -161,8 +150,8 @@ $(function(){
             },
             success:function (res) {
                 if(res.code === 1){
-                	layer.alert('添加成功',function () {
-                        window.location.reload();  //刷新父级页面
+                    layer.alert('添加成功',function () {
+                        window.parent.location.reload();  //刷新父级页面
                     });
                 }
             }
@@ -170,5 +159,3 @@ $(function(){
 
     }
 </script>
-{include file='index@public/footer'}
-</html>

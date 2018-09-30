@@ -31,16 +31,14 @@ class Goods extends BaseController
 
     // 搜索
     public function search($key=''){
-        $Category = Category::getCategoryErJi(); //生成二级分类
         $goodsInfo = GoodesModel::getKeyGoodsInfo($key);
         $count = $goodsInfo->count();
         $id = 0;
         $this->assign([
-            'category'  =>  $Category,
             'goods'     =>  $goodsInfo,
             'count'     =>  $count,
             'id'        =>  $id,
-            'title'     =>  '搜索 '.$key
+            'title'     =>  $key
         ]);
         return $this->fetch();
     }

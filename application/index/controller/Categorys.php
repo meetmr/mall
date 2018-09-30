@@ -14,14 +14,18 @@ use app\admin\model\Goods;
 class Categorys extends BaseController
 {
     public function index($id){
-        $Category = Category::getCategoryErJi(); //生成二级分类
+        // 获取顶级分类
+        $classification = Category::getGoodsCategoryInfoDingji($id);
         $goods = Goods::getCategoryGoods($id);
+        $top_level= $classification['dj'];
+        unset($classification['dj']);
         $count = $goods->count();
         $this->assign([
-            'category'  =>  $Category,
-            'goods'     =>  $goods,
-            'count'     =>  $count,
-            'id'       =>  $id
+            'classification'   =>    $classification  ,
+            'top_level'        =>    $top_level,
+            'id'               =>    $id,
+            'goods'            =>    $goods,
+            'count'           =>    $count
         ]);
         return $this->fetch();
     }

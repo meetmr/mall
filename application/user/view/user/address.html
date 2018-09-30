@@ -1,96 +1,116 @@
-﻿
-{include file='public/top'}
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>管理收货地址-个人中心-PHPMall</title>
+	<meta name="Copyright" content="{$confRes.miaoshu}"/>
+	<meta name="Keywords" content="{$confRes.sitename}"/>
+	<meta name="Description" content="{$confRes.miaoshu}"/>
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-personal-address.39815a20.css">
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+	<script src="/static/layer/layer.js"></script>
+</head>
+<body>
 
-<!--头部-->
-{include file='index@public/header'}
+<div id="header" class="header">
+	<!--个人状态-->
+	{include file="index@public/topmenu"}
+	<!--个人状态end-->
+	<!--导航栏-->
+	{include file="index@public/topnav"}
+	<!--导航栏end-->
 
-<div id="member_content">
-	<div class="w clearfix">
-		{include file='public/mem_menu'}
-<script src="static/js/jquery.lavalamp.min.js"></script>
-<script>
-$(function(){
-	//边栏菜单的伸缩效果
-	$("#mem_menu h2").click(function(){
-		var sidebar_dd = $(this).next("ul");
-		if(!sidebar_dd.is(":animated")){
-			$(this).toggleClass("open");
-			sidebar_dd.slideToggle("slow");	
-		}	
-	});	
-	
-	//边栏菜单选中效果	
-	var crumbs_name='收货地址';
-	$(".sline li a").each(function(){			
-		var href_name=$.trim($(this).text());	
-		if(href_name==crumbs_name){				
-			 $(this).addClass('current');		 	 
-		}
-	});	 	
-	
-	//面包屑导航下划线滑动效果
-	if($('#top-tag')){
-		
-		$('#top-tag').lavalamp({
-			easing: 'easeOutBack'
-		});	
-		
-		var v =$('#top-tag li.on').index();
-		
-		var a = $('#top-tag').children('.lavalamp-item').eq(parseFloat(v)-1);		
-		$('#top-tag').data('lavalampActive',a).lavalamp('update');	
-	}
-});	
-
-</script>
-		<div id="right_content">
-			<div id="member-nav" class="clearfix">
-				<ul id="top-tag" class="order-list">
-					<li class="fl on">						
-						<a style="color:red;">收货地址</a>
-					</li>		
-					<li class="fl">
-						<a  href="{:url('user/user/addAddress')}">新增地址</a>
-					</li>
-				</ul>
-			</div>
-			<table class="table boxorder">
-				<thead>
-					<tr>
-						<th>收货人</th> 
-						<th>地区</th>
-						<th>地址</th>
-						<th>联系电话</th>
-						<th>操作</th>	
-					</tr>
-				</thead>
-				<tbody>
- 				{volist name="address" id="vo_address"}
-				<tr>
-					<td>{$vo_address.name}</td>
-					<td>{$vo_address.city},{$vo_address.country},{$vo_address.detail}</td>
-					<td>{$vo_address.detailed}</td>
-					<td>{$vo_address.province}</td>
-					<td>
-						<a class="delete btn"  onclick="delete_address('{$vo_address.id}')"  style="cursor:pointer" >
-							删除
+</div>
+<div class="content">
+	<!--==S== ORDER：订单 ==-->
+	<div class="personal">
+		<div class="personal-header">
+			<h2 class="title">个人中心 - 管理收货地址</h2>
+		</div>
+		<div class="personal-body">
+			<!--==S== ASIDE：侧边栏 ==-->
+			{include file="public/mem_menu"}
+			<!--==E== ASIDE：侧边栏 ==-->
+			<div class="personal-main">
+				<div class="address-manage">
+					<div class="address-manage-header" style="display:block">
+						<a class="add-address"  style="cursor: pointer" onclick="x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600)" >
+							<i class="icon-plus"></i>
+							<span>新增收货地址</span>
 						</a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="20" class="page"></td>
-						</tr>
-				{/volist}
-				</tbody>
-				
-			</table>
-			
+
+					</div>
+					<!-- 还没有添加收货地址显示下面的代码 -->
+					<div class="empty-address"  {if $count != 0} style="display:none"{/if} >
+						<p><i class="icon_warn_yellow"></i>您还没有添加收货地址，请添加~</p>
+					</div>
+					<!-- 还没有添加收货地址显示上面的代码 -->
+
+					<!-- 已经添加了收货地址显示下面的代码 -->
+					<div class="address-manage-list" data-type="set-default">
+						<div class="address-manage-list" data-type="set-default">
+							{volist name="address" id="vo_address"}
+							<div class="address-item">
+								<div class="address-manage-item cf">
+									<div data-id="739479" class="address-manage-card default">
+									<p><span class="location">{$vo_address.city},{$vo_address.country},{$vo_address.detail},{$vo_address.detailed}
+											 </span></p>
+										<p><span class="name">{$vo_address.name}；</span><span class="tel-num"><span class="num">{$vo_address.province}</span></span></p> </div>
+									<a href="javascript:void(0);" class="modify">修改</a> <a href="javascript:void(0);"  onclick="delete_address('{$vo_address.id}')" class="delete">删除</a> </div>
+							</div>
+							{/volist}
+
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<!--==E== ORDER ==-->
 </div>
-{include file='index@public/footer'}
+
+
+<!--尾部-->
+{include file="index@public/footer"}
+<!--尾部end-->
+
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+</body>
+<script type="text/javascript" src="/static/index/js/address.f57837e4.js"></script>
+</html>
 <script>
-	function delete_address(id) {
+    function x_admin_show(title,url,w,h){
+        if (title == null || title == '') {
+            title=false;
+        };
+        if (url == null || url == '') {
+            url="404.html";
+        };
+        if (w == null || w == '') {
+            w=($(window).width()*0.9);
+        };
+        if (h == null || h == '') {
+            h=($(window).height() - 50);
+        };
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade:0.4,
+            title: title,
+            content: url
+        });
+    }
+
+</script>
+<script>
+    function delete_address(id) {
         $.ajax({
             url:"{:url('user/user/deleteAddress')}",
             type:"POST",
@@ -109,4 +129,4 @@ $(function(){
 
     }
 </script>
-</html>
+

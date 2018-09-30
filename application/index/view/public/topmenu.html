@@ -1,0 +1,21 @@
+<div class="topmenu">
+    <div class="wrapper">
+        <div class="user">
+            {if $Think.session.user}
+            <a class="user__account" href="{:url('user/User/member')}" > 欢迎你 <span class="user__name">{$Think.session.user.username}</span></a>
+            <a href="{:url('user/Login/logout')}" class="user__logout">退出</a>
+            {else}
+            <a href="{:url('user/Login/login')}"class="user__logout">登陆</a> |
+            <a href="{:url('user/Login/register')}" class="user__logout">注册</a>
+
+            {/if}
+
+        </div>
+        <div class="user-center">
+            <ul class="center__list">
+                <li class="center__item"><a href="{:url('user/User/member')}">我的订单</a></li>
+                <li id="shopCart" class="center__item center__cart"><a href="{:url('user/cart/info')}" ><i class="icon_cart_s"></i>购物车（<span id="cartNum" class="badge">{$cart_count}</span>）</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

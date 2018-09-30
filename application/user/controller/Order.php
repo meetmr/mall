@@ -105,7 +105,6 @@ class Order extends BaseController
             $order['payment'] = $sum_price;
             $order['user_id'] = session('user.id');
             $order['goods_item'] = json_encode($userCart);
-            $order['shipping_name'] = $data['shipping_name'];
             $order['close_time'] = time() + 1800;
             $info = OrderModel::create($order);
             if($info){

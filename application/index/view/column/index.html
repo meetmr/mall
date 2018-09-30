@@ -1,143 +1,118 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-	<title>{$column.name}-PHPMall</title>
-	<meta name="keywords" content="{$column.name}"/>
-	<meta name="description" content="{$column.name}"/>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0" />
-	<link rel="stylesheet" href="/static/index/css/base_1.css" />
-	<link rel="stylesheet" href="/static/index/css/category.css" />
-	<script src="/static/index/js/jquery-2.1.4.min_1.js"></script>
-	<script src="/static/index/js/jquery-migrate-1.2.1.min_1.js"></script>
-	<link type="image/x-icon" href="/public/uploads/cache/images/osc1/store/index-16x16.jpg" rel="icon">
-	<link type="image/x-icon" href="/public/uploads/cache/images/osc1/store/index-16x16.jpg" rel="bookmark">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>{$confRes.sitename}</title>
+  <meta name="Copyright" content="{$confRes.miaoshu}"/>
+  <meta name="Keywords" content="{$confRes.sitename}"/>
+  <meta name="Description" content="{$confRes.miaoshu}"/>
+  <link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-sort.2b57e877.css">
 </head>
 <body>
-<div class="com-top-nav w">
-	<div class="wcp-wrap">
-	</div>
+
+<div id="header" class="header">
+  <!--个人状态-->
+  {include file="public/topmenu"}
+  <!--个人状态end-->
+  <!--导航栏-->
+  {include file="public/topnav"}
+  <!--导航栏end-->
+
 </div>
 
-{include file='public/header'}
-<div class="wcp_wrap">
-	<div class="list_crumb">
-		<ul class="list_crumb_list">
-			<li class="classify"><a href="/">首页</a><i class="crumb_arrow"></i></li>
-			<li class="classify">{$column.name}</li>
-		</ul>
-	</div>	
-	
-	<div id="filter" class="selector_box">
-		<div class="selector_info">
-			<h3>
-				<em>产品列表</em> <b> </b>
-			</h3>			
-			<span style="float:right;">搜索到<b>{$count}</b>件商品</span>
-		</div>
-		
-
-	</div>	
-	
-</div>	
-
-<div class="wcp_wrap clearfix">
-
-			<div class="produ-selection w">
-				<div class="produ-lists w">
-
-					{volist name="goods" id="vo_goods"}
-					<div class="produ-box">
-									<div class="produ-box-content">
-										<a target="_blank" class="produ-img"href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" >
-											<img alt="{$vo_goods.goods_name}"  width="100%"  class="loading" src="/static/uploads/{$vo_goods.og_thumb}" style="display: inline;">
-											<div class="overburden"></div></a>
-											<div class="produ-classes">
-											<a class="prev hidden" href="javascript:;"></a>
-											<div>
-												<ul>
-													<?php $images = $vo_goods['images']; ?>
-													{volist name="images" id="vo_images"}
-													<li class="current">
-														<a data-info="/{$vo_images.img_path}">
-															<img class="loading" src="/{$vo_images.img_path}" style="display: inline;">
-														</a>
-													</li>
-													{/volist}
-												</ul>
-											</div>
-											<a class="next hidden" href="javascript:;"></a>
-										</div>
-										<span class="produ-info">{$vo_goods.goods_name}</span>
-												
-										<span class="produ-price-info "> 
-											<span class="sale-produ-price">&yen; {$vo_goods.shop_price}</span>
-											<span class="del-produ-price">&yen; {$vo_goods.markte_price}</span>
-										</span>										
-									
-										<span class="produ-buy-now">
-											<div class="buy-now color-white section">
-												<p><a href="/goods/10" class="buy-now-btn buy-now-btn-1 buy-now-btn-1b">立刻购买</a></p>
-											</div>
-										</span>
-									</div>
-								</div>
-					{/volist}
-
-				</div>
-			</div>
-			<div id="snp" class="snPages">
-			</div>
+<div class="breadcrumb-box">
+  <ol class="breadcrumb">
+    <li><a href="/">商城首页</a><span class="diagonal">&gt;</span></li>
+    <li><a href="javascript:void(0);">{$column.name}</a></li>
+  </ol>
 </div>
-<!--底部-->
-{include file='public/footer'}
 
-<script>
-    $(document).ready(function() {
-        var mySwiper = new Swiper('.swiper-container', {
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            autoplay: 6000,
-            simulateTouch: false,
-            speed: 300,
-            loop: true,
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            paginationBulletRender: function(swiper, index, className) {
-                var strs = new Array();
-                for (var i = 0; i < $(".swiper-container .swiper-wrapper").find("div.swiper-slide").length; i++) {
-                    strs[i] = $(".swiper-container .swiper-wrapper").find("div.swiper-slide").eq(i).find("a").attr("title");
-                }
-                return '<span class="' + className + '">' + strs[index + 1] + '</span>';
-            }
-        });
-    });
+<div class="content">
+  <div class="sort">
+    <h2>{$column.name}</h2>
+    <div id="productListSortCtrl" class="filter">
+      <ul>
+        <li data-type="default">
+          <a href="javascript:void(0);">默认排序</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {if $count!=0}
+  <div class="goods_list cf">
+    {volist name="goods" id="vo_goods"}
+    <div class="goods_wrap">
+      <div class="goods goods_main">
+        <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+          <div class="goods_pic">
+            <img class="js_productMainPic{$vo_goods.id}" src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="220" height="220">
+          </div>
+        </a>
+        <div class="goods_info">
+          <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+            <p class="goods_name" title="{$vo_goods.goods_name}">{$vo_goods.goods_name}</p>
+          </a>
+          <a href="javascript:void(0);" class="goods_like"><i class="icon_fulllove"></i></a>
+          <p class="goods_price">￥<span class="num">{$vo_goods.shop_price}</span></p>
+          <p class="goods_jf"  style="color: red"><s>市场价 ￥<span class="num" >{$vo_goods.markte_price}</span></s></p>
 
-    $(".produ-classes ul li.current a").each(function() {
-        var srcStr, $img;
-        $img = $(this).parent().parent().parent().parent().parent().find(".produ-img img");
-        srcStr = $img.attr("src");
-        $(this).hover(function() {
-                $img.attr("src", $(this).attr("data-info"));
-            },
-            function() {
-                $img.attr("src", srcStr);
-            })
-    });
-    $(".produ-classes ul").each(function() {
-        var lengths1 = $(this).find("li").length;
-        if (lengths1 <= 5) {
-            $(this).parent().siblings("a.prev").addClass("hidden");
-            $(this).parent().siblings("a.next").addClass("hidden");
-        } else {
-            $(this).parent().siblings("a.prev").removeClass("hidden");
-            $(this).parent().siblings("a.next").removeClass("hidden");
-        }
-    });
+        </div>
+        <div class="goods_detail goods goods_detail_lg">
+          <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}"target="_blank">
+            <div class="goods_pic goods_main_pic">
+              <img class="js_productMainPic{$vo_goods.id}" src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="220" height="220">
+            </div>
+          </a>
+          <div class="goods_other_pic goods_other_pic_lg">
 
-</script>
+            <div class="goods_other_pic_left">
+              <?php $images = $vo_goods['images']; ?>
+              {volist name="images" id="vo_images"}
+              <a class="js_thumbnail" data-for=".js_productMainPic{$vo_goods.id}"href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <img src="/{$vo_images.img_path}" alt="{$vo_goods.goods_name}" width="60" height="60">
+              </a>
+              {/volist}
+            </div>
+            <div class="goods_other_pic_right">
+              <a class="js_thumbnail" data-for=".js_productMainPic{$vo_goods.id}" href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <img src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="60" height="60">
+              </a>
+            </div>
+          </div>
+          <div class="goods_info">
+            <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+              <p class="goods_name" title="{$vo_goods.goods_name}">{$vo_goods.goods_name}</p>
+            </a>
+            <a href="javascript:void(0);" class="goods_like"><i class="icon_fulllove"></i></a>
+            <p class="goods_price">￥<span class="num">{$vo_goods.shop_price}</span></p>
+            <p class="goods_jf"  style="color: red"><s>市场价 ￥<span class="num" >{$vo_goods.markte_price}</span></s></p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {/volist}
+  </div>
+  {else}
+  <div class="box">
+    <div class="box__header">
+      <h2 class="title"><i class="title__icon icon_warn_yellow"></i>抱歉，没有找到<em>“{$title}”</em>相关商品</h2>
+    </div>
+    <div class="box__body">
+    </div>
+  </div>
+  {/if}
 
 
+</div>
+
+<!--尾部-->
+{include file="public/footer"}
+<!--尾部end-->
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script type="text/javascript" src="/static/index/js/shop-category.dd928d8c.js"></script>
+</body>
 </html>

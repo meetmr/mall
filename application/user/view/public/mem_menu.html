@@ -1,36 +1,36 @@
-<div id="mem_menu">
-    <h1>会员中心</h1>
-    <h2 class="title">我的订单</h2>
-    <ul class="sline">
-        <li>
-            <a {if $left == 'order'} class="current" {/if} href="{:url('user/user/member')}">订单管理</a>
-        </li>
-        <li>
-            <a href="http://www.91ycc.com/member/comment/index">我的评价</a>
-        </li>
-        <li>
-            <a href="http://www.91ycc.com/member/predeposit/index">我的余额</a>
-        </li>
-
-        <li>
-            <a href="http://www.91ycc.com/member/message/index">我的消息</a>
-        </li>
-    </ul>
-    <h2 class="title">个人资料</h2>
-    <ul class="sline">
-
-        <li>
-            <a href="http://www.91ycc.com/member/account/password">修改密码</a>
-        </li>
-
-        <li>
-            <a {if $left == 'address'} class="current" {/if}  href="{:url('user/user/address')}">收货地址</a>
-        </li>
-    </ul>
-    <h2 class="title">客户服务</h2>
-    <ul class="sline">
-        <li>
-            <a href="http://www.91ycc.com/member/aftersales/index">售后服务</a>
-        </li>
-    </ul>
+<div class="personal-aside">
+    <div class="personal-info">
+        <div class="avatar">
+            <img alt="avatar" width="90" height="90" onerror="this.src='/static/index/picture/qq_face.png'" src="//my.pay.qq.com/cgi-bin/account/get_qq_face.cgi?uin=1781634625">
+        </div>
+        <p class="nick">遇见更好的自己</p>
+        <a class="log-out" href="/pc/logout?shopId=2">[ 退出 ]</a>
+        <p class="qq clearfix">1781634625</p>
+        <p class="integral">积分：945</p>
+    </div>
+    <div class="menu">
+        <p class="title">交易管理</p>
+        <ul>
+            <li>
+                <a   {if $left == 'order'} class="active" {/if}    href="{:url('user/user/member')}">我的订单</a>
+            </li>
+            <li>
+                <a class="" href="myfavorite?shopId=2&pf=pc.pay.zh">我喜欢的</a>
+            </li>
+            <li>
+                <a class="" href="usage?shopId=2&pf=pc.pay.zh">我的积分</a>
+            </li>
+            <li>
+                <a class="" href="/pc/cart?shopId=2&pf=pc.pay.zh">我的购物车</a>
+            </li>
+        </ul>
+    </div>
+    <div class="menu">
+        <p class="title">个人信息管理</p>
+        <ul>
+            <li>
+                <a  {if $left == 'address'} class="active" {/if}  href="{:url('user/user/address')}">管理收货地址</a>
+            </li>
+        </ul>
+    </div>
 </div>

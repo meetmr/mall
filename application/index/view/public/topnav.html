@@ -1,0 +1,56 @@
+<div class="topnav cf">
+    <div class="wrapper">
+        <div class="logo">
+            <a href="/">
+                <img id="logoImage" src="/static/index/picture/login.png" alt="PHPMall商城">
+            </a>
+        </div>
+        <div class="navbar">
+            <ul class="cf">
+                <li class="nav-item">
+                    <a href="/" class="nav-item-a -hot">
+                        首页<i class="icon_hot" style="display: none">HOT</i>
+                    </a>
+                </li>
+                <li id="shopCategory" class="nav-item">
+                    <a href="/" class="nav-item-a"><i ></i><span>分类</span></a>
+                    <div id="shopCategoryMenu" class="category">
+                        <div class="category-bg"></div>
+                        <ul class="category-sub-navbar" style="display: block;">
+                            {volist name="category" id="vo_category"}
+                            <li>
+                                <h3 class="name"><a style="color: #0a0a0a" href="{:url('index/Categorys/index',array('id'=>$vo_category.id))}" >{$vo_category.cate_name}</a></h3>
+                                <ul class="list">
+                                    <?php $erji = $vo_category['erji'];?>
+                                    {volist name="$erji" id="vo_erji"}
+                                    <li><a href="{:url('index/Categorys/index',array('id'=>$vo_erji.id))}" target="_blank">{$vo_erji.cate_name}</a></li>
+                                    {/volist}
+                                </ul>
+                            </li>
+                            <br>
+                            {/volist}
+
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- 首页栏目-->
+                {volist name="recommend" id="vo_recommend"}
+                <li id="lotteryMenu" class="nav-item">
+                    <a  href="{:url('index/Column/index',array('id'=>$vo_recommend.id))}" target="_blank" class="nav-item-a"><i class="star"></i><span>{$vo_recommend.name}</span></a>
+                </li>
+                {/volist}
+                <!-- 首页栏目end-->
+            </ul>
+        </div>
+        <div id="search-bar" class="search">
+            <div class="search__edit">
+                <form id="search-form" name="search-form" method="get" action="{:url('index/goods/search')}">
+                    <input id="search-input" name="key" class="search__input" type="search" placeholder="搜索有惊喜" value="">
+                </form>
+                <i id="search-btn" class="iconfont icon-search search__icon"></i>
+            </div>
+
+        </div>
+    </div>
+</div>

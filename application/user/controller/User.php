@@ -36,8 +36,10 @@ class User extends BaseController
     // 收获地址
     public function address(){
         $address = UserAddress::where(['user_id'=>session('user.id')])->select();
+        $count = $address->count();
         $this->assign([
-            'address'   =>  $address
+            'address'   =>  $address,
+            'count'     =>  $count
         ]);
         $this->assign([
             'title'    =>  '收货地址',

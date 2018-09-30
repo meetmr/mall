@@ -12,7 +12,7 @@ class Base
     const MCHID = '1420367002'; //商户号需要更改成自己的
     const SECRET = 'b9840976e63916e233d1d380549514a3'; //开发者密码需要更改为自己的
     const UOURL = 'https://api.mch.weixin.qq.com/pay/unifiedorder'; //无需更改 统一下单API地址
-    const NOTIFY = 'http://mall.1flove.com/user/wx/notify';   //支付通知地址需要更改成你自己服务器的地址
+    const NOTIFY = 'http://m.1flove.com/user/wx/notify';   //支付通知地址需要更改成你自己服务器的地址
 
     public function __construct() {
        

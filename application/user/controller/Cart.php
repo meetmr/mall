@@ -26,10 +26,15 @@ class Cart extends BaseController
         $userCart = $data['userCart'];
         $sum_price = $data['sum_price'];
         $is = count($userCart);
+        $goods = [];
+        if(!$is){
+            $goods = Goods::getCratGoods(10);
+        }
         $this->assign([
             'userCart'      =>   $userCart,
             'sum_price'     =>   $sum_price,
             'is'            =>   $is,
+            'goods'         =>    $goods
         ]);
         return $this->fetch('info');
     }

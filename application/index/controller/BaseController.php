@@ -48,7 +48,7 @@ class BaseController extends Controller
 
     // 获取商品分类
     public  function getCategory(){
-        $category = Category::getCategory();
+        $category = Category::getCategoryErJi();
         $this->assign([
             'category'   =>  $category
         ]);
@@ -105,4 +105,5 @@ class BaseController extends Controller
         $order = Order::where(['user_id'=>session('user.id')])->select();
         return $order;
     }
+
 }

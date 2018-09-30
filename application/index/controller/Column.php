@@ -15,7 +15,7 @@ class Column extends BaseController
 {
     public function index($id){
         // 获取栏目名称
-       $column = Recommend::get($id);
+        $column = Recommend::get($id);
        // 获取栏目下的商品
         $goods = Goods::getCategoryColumnGoods($id);
         $count = $goods->count();

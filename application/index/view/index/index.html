@@ -1,115 +1,134 @@
 ﻿<!--顶部-->
-{include file='public/head'}
+{include file="public/top"}
+<!--顶部end-->
+
 <body>
-	<div class="com-top-nav w">
-	<div class="wcp-wrap">
-	</div>
-</div>
-<!--头部-->
-	{include file='public/header'}
-<!--轮播图-->
-	{include file='public/swiper-container'}
-
-<div class="series-nav w-full">
-	<!--最新商品-->
-	{include file='public/series-nav'}
+<div id="header" class="header">
+ <!--个人状态-->
+  {include file="public/topmenu"}
+  <!--个人状态end-->
+  <!--导航栏-->
+  {include file="public/topnav"}
+  <!--导航栏end-->
 </div>
 
-<div class="produ-selection w">
-	<div class="produ-lists w">
-		<!--商品列表-->
-		{volist name="countGoods" id="vo_count_goods"}
-		<div class="produ-box">
-						<div class="produ-box-content">
-							<a target="_blank" class="produ-img" href="{:url('index/Goods/index',array('id'=>$vo_count_goods.id))}" >
-								<img alt="{$vo_count_goods.goods_name}" width="100%"  src="/static/uploads/{$vo_count_goods.og_thumb}" style="display: inline;">
-								<div class="overburden"></div></a>
-								<div class="produ-classes">
-								<a class="prev hidden" href="javascript:;"></a>
-								<div>
-									<ul>
-										<?php $images = $vo_count_goods['images']; ?>
-										{volist name="images" id="vo_images"}
-										<li class="current">
-											<a data-info="/{$vo_images.img_path}">
-												<img class="loading" src="/{$vo_images.img_path}" style="display: inline;">
-											</a>
-										</li>
-										{/volist}
-									</ul>
-								</div>
-								<a class="next hidden" href="javascript:;"></a>
-							</div>
-							<span class="produ-info">{$vo_count_goods.goods_name|subtext=30}</span>
+  <!--轮播图-->
+  {include file="public/banner-wrap"}
+  <!--轮播图end-->
+<div class="content">
+  <div class="section hot">
+    <div class="section-header">
+      <div class="title">
+        <img src="/static/index/picture/23b7e36cb0a24520b8cd2a835ac62024.gif">
+        <h2>人气热销</h2>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="goods_list primary cf">
+        <!--人气热销-->
+        {volist name="hotSaleGoods" id="vo_goods"}
+        <div class="goods_wrap">
+          <div class="goods">
+            <div class="corner hot">
+              <span class="hide">HOT</span>
+            </div>
+            <div class="goods_pic">
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <img src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="230" height="230"></a>
+            </div>
+            <div class="goods_info">
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <p class="goods_name" title="{$vo_goods.goods_name}">{$vo_goods.goods_name}</p>
+              </a>
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}"target="_blank" class="goods_like"><i class="icon_fulllove"></i></a>
+              <p class="goods_price">￥<span class="num">{$vo_goods.shop_price}</span></p>
+            </div>
+          </div>
+        </div>
+        {/volist}
+        <!--人气热销end-->
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="section ">
+    <div class="section-header">
+      <div class="title">
+        <img src="/static/index/picture/420ac03c3f784d3e8d341d50aee2a596.gif">
+        <h2>新品尝鲜</h2>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="goods_list primary cf">
+        <!--新品尝鲜-->
+        {volist name="newProductGoods" id="vo_goods"}
+        <div class="goods_wrap">
+          <div class="goods">
+            <div class="goods_pic">
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <img src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="230" height="230"></a>
+            </div>
+            <div class="goods_info">
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <p class="goods_name" title="{$vo_goods.goods_name}">{$vo_goods.goods_name}</p>
+              </a>
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}"target="_blank" class="goods_like"><i class="icon_fulllove"></i></a>
+              <p class="goods_price">￥<span class="num">{$vo_goods.shop_price}</span></p>
+            </div>
+          </div>
+        </div>
+        {/volist}
+        <!--新品尝鲜end-->
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="section ">
+    <div class="section-header">
+      <div class="title">
+        <img src="/static/index/picture/d91ee280e5b34c15b94f5ba61fbb5b00.gif">
+        <h2>为你推荐</h2>
+      </div>
+    </div>
+    <div class="section-content">
+      <div class="goods_list primary cf">
+        <!--为你推荐-->
+        {volist name="recommendGoods" id="vo_goods"}
+        <div class="goods_wrap">
+          <div class="goods">
+            <div class="goods_pic">
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <img src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="230" height="230"></a>
+            </div>
+            <div class="goods_info">
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+                <p class="goods_name" title="{$vo_goods.goods_name}">{$vo_goods.goods_name}</p>
+              </a>
+              <a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}"target="_blank" class="goods_like"><i class="icon_fulllove"></i></a>
+              <p class="goods_price">￥<span class="num">{$vo_goods.shop_price}</span></p>
+            </div>
+          </div>
+        </div>
+        {/volist}
 
-							<span class="produ-price-info ">&yen; <span class="produ-price">{$vo_count_goods.shop_price}</span></span>
-							<span class="produ-buy-now">
-								<div class="buy-now color-white section">
-									<p><a target="_blank" href="{:url('index/Goods/index',array('id'=>$vo_count_goods.id))}" class="buy-now-btn buy-now-btn-1 buy-now-btn-1b">立刻购买</a></p>
-								</div>
-							</span>
-						</div>
-					</div>
-		{/volist}
-		<!--商品列表end-->
+        <!--为你推荐end-->
 
-	</div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
-<div class="select-more color-white section">
-			<p><a href="{:url('index/Categorys/index',array('id'=>0))}" target="_blank" class="select-more-btn select-more-btn-1 select-more-btn-1b">选购更多商品&nbsp;&nbsp;»</a></p>
+<div class="fixed-tools">
+  <a href="javascript:void(0);" class="btn-back-to-top"></a>
 </div>
 
-<!--底部-->
-	{include file='public/footer'}
-<script src="/static/index/js/common_1.js"></script>
-
-<link rel="stylesheet" href="/static/index/css/swiper.min_1.css">
-<script src="/static/index/js/swiper.jquery.min_1.js"></script>
-<script>
-$(document).ready(function() {
-var mySwiper = new Swiper('.swiper-container', {
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev',
-        autoplay: 6000,
-        simulateTouch: false,
-        speed: 300,
-        loop: true,
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        paginationBulletRender: function(swiper, index, className) {
-            var strs = new Array();
-            for (var i = 0; i < $(".swiper-container .swiper-wrapper").find("div.swiper-slide").length; i++) {
-                strs[i] = $(".swiper-container .swiper-wrapper").find("div.swiper-slide").eq(i).find("a").attr("title");
-            }
-            return '<span class="' + className + '">' + strs[index + 1] + '</span>';
-        }
-    });
-});
-
-$(".produ-classes ul li.current a").each(function() {
-        var srcStr, $img;
-        $img = $(this).parent().parent().parent().parent().parent().find(".produ-img img");
-        srcStr = $img.attr("src");
-        $(this).hover(function() {
-            $img.attr("src", $(this).attr("data-info"));
-        },
-        function() {
-            $img.attr("src", srcStr);
-        })
-    });
-    $(".produ-classes ul").each(function() {
-        var lengths1 = $(this).find("li").length;
-        if (lengths1 <= 5) {
-            $(this).parent().siblings("a.prev").addClass("hidden");
-            $(this).parent().siblings("a.next").addClass("hidden");
-        } else {
-            $(this).parent().siblings("a.prev").removeClass("hidden");
-            $(this).parent().siblings("a.next").removeClass("hidden");
-        }
-    });
-
-</script>
-
+<!--尾部-->
+{include file="public/footer"}
+<!--尾部end-->
+</body>
 </html>

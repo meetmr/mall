@@ -1,117 +1,198 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-	<title>购物车-PHPMall</title>
-	<meta name="keywords" content="购物车-PHPMall"/>
-	<meta name="description" content="购物车-PHPMall"/>
-	<link rel="stylesheet" href="/static/user/css/base.css" />
-	<link rel="stylesheet" href="/static/user/css/cart.css" />
-	<script src="/static/user/js/jquery-2.1.4.min.js"></script>
-	<script src="/static/user/js/jquery-migrate-1.2.1.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>我的购物车-腾讯积分商城</title>
+	<meta name="Copyright" content="Tencent"/>
+	<meta name="Keywords" content="腾讯积分商城"/>
+	<meta name="Description" content="腾讯积分商城"/>
+
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-cart.89694c91.css"/>
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+	<script src="/static/layer/jquery.min.js"></script>
 	<script src="/static/layer/layer.js"></script>
 </head>
 <body>
-	<div class="com-top-nav w">
-	<div class="wcp-wrap">
-	</div>
+
+<div id="header" class="header">
+	<!--个人状态-->
+	{include file="index@public/topmenu"}
+	<!--个人状态end-->
+	<!--导航栏-->
+	{include file="index@public/topnav"}
+	<!--导航栏end-->
+
 </div>
 
-	<!--头部-->
-	{include file='index@public/header'}
-	<div id="cart">
-		{if $is}
-		<div class="w_cart" id="no_empty">
-			<div class="cart-hd group">
-				<h2>我的购物车</h2>
-			</div>
-			<div class="w_cart_inner">
-				<table class="w_cart_table">
-					<thead>
-					<tr>
 
-						<td>商品编号</td>
-						<td>商品图片</td>
-						<td style="text-align: left">商品信息</td>
-						<td>单价</td>
-						<td>商品数量</td>
-						<td>删除商品</td>
-					</tr>
-					</thead>
-					{volist name="userCart" id="user_Cart"}
-					<tr class="item">
-						<td>{$user_Cart.goods.goods_code}</td>
-						<td class="p-img">
-							<a class="in_b" href="{:url('index/Goods/index',array('id'=>$user_Cart.goods.id))}">
-								<img class="vm" alt="{$user_Cart.goods.goods_name}" width="40" src="/static/uploads/{$user_Cart.goods.og_thumb}">
-							</a>
-						</td>
-						<td class="p-name">
-							<h2> <a title="{$user_Cart.goods.goods_name}" href="{:url('index/Goods/index',array('id'=>$user_Cart.goods.id))}">{$user_Cart.goods.goods_name}</a> </h2>
-						</td>
-						<td class="p-price">
-							<span class="price">&yen; {$user_Cart.goods.shop_price}</span>
-						</td>
-						<td class="p-quantity">
-							<div class="quantity-form" id="quantitym26xlgwkwq">
-								<a onclick='changeQty(0,"{$user_Cart.goods.id}");' class="decrement">-</a>
-								<input onkeyup='change_quantity("m26xlgwkwq",this);' type="text" value="{$user_Cart.number}" disabled id="quantity{$user_Cart.goods.id}" class="quantity-text">
-								<a onclick='changeQty(1,"{$user_Cart.goods.id}");'  class="increment">+</a>
-							</div>
-						</td>
-						<td class="p-remove"><a style="cursor: pointer;" onclick="remove_goods('{$user_Cart.id}');" class="cart-remove">删除</a></td>
-					</tr>
-					{/volist}
-					<tr class="cart_toolbar">
-						<td colspan="5">
-							<div style="width: 200px;" class="control">
-
-								<span class="delete_cart"> <a style="cursor: pointer;" onclick="truncate();">清空购物车</a></span>
-							</div>
-						</td>
-
-						<td class="total_box" colspan="6">
-							<p>
-								<label for="应付金额">总计</label> <span id="Jfinal" class="c_red total_price">¥<i>{$sum_price}</i></span>
-							</p>
-						</td>
-					</tr>
-					<tr class="cart_total">
-						<td colspan="8"><a class="continue" href="/">继续购物</a>
-							<a href="{:url('user/order/all')}" class="account">结算</a>
-						</td>
-					</tr>
-					</tbody>
-				</table>
+<div class="content">
+	<div class="order cart">
+		<div class="order-header">
+			<h2 class="title">我的购物车</h2>
 			</div>
-		</div>
-		{else}
-		<div class="w_cart w" id="empty">
-			<div class="cart-hd group">
-				<h2>我的购物车</h2>
-			</div>
-			<div class="cart-inner cart-empty">
-				<div class="message">
-					<p>
-						购物车内暂时没有商品，您可以<a href="/">马上去挑选商品</a>
-					</p>
+		<div class="order-body">
+
+			<div class="order-body">
+				<div class="order-section js_supplier supplier" id="js_supplier-20" data-supplier-id="20"  {if $is == 0} style="display: none;" {else} {/if}>
+						<div class="order-section-header stuckMenu">
+							<a href="{:url('user/order/all')}" type="button" style="background: red;cursor: pointer" class="js_gotoPay btn btn-big btn-green btn-settlement btn-disabled" >去结算</a>
+							<div class="tips"> <span class="product-price"> 共 ￥<span class="num js_price-sum">{$sum_price}</span></span></span></div>
+						</div>
+						<div class="order-section-body order-detail">
+							<table class="order-detail-table">
+								<thead>
+								<tr>
+									<th class="product">商品信息</th>
+									<th class="unit-price">单价（元）</th>
+									<th class="amount">数量</th>
+									<th class="total">小计（元）</th>
+									<th class="operate">操作</th>
+								</tr>
+								</thead>
+								<tbody>
+								{volist name="userCart" id="user_Cart"}
+
+								<tr class="js_product">
+									<td>
+										<div class="label_area product">
+											<a class="product-img"  href="{:url('index/Goods/index',array('id'=>$user_Cart.goods.id))}" target="_blank">
+												<img src="/static/uploads/{$user_Cart.goods.og_thumb}" alt="{$user_Cart.goods.goods_name}">
+											</a>
+
+											<div class="product-intro">
+												<a class="product-name" href="{:url('index/Goods/index',array('id'=>$user_Cart.goods.id))}" target="_blank" title="{$user_Cart.goods.goods_name}">{$user_Cart.goods.goods_name}</a>
+											</div>
+										</div>
+									</td>
+									<td class="td-total-num">￥<span class="num js_single-price">{$user_Cart.goods.shop_price}</span></td>
+									<td>
+										<div class="quantity-cover">
+
+											<div class="js_quantity-input js_product-model quantity-input small" >
+												<button type="button" class="reduce">
+													<i class="icon-reduce" onclick='changeQty(0,"{$user_Cart.goods.id}");' ></i>
+												</button>
+
+												<input type="text" class="quantity-input-tx" onkeyup='change_quantity("m26xlgwkwq",this);' id="quantity{$user_Cart.goods.id}"  disabled value="{$user_Cart.number}"  maxlength="3">
+												<button type="button" class="add">
+													<i class="icon-add" onclick='changeQty(1,"{$user_Cart.goods.id}");' ></i>
+												</button>
+											</div>
+											<span class="tips warn no-stock" style="display: none;">最多只能购买976件</span>
+
+										</div>
+									</td>
+
+									<td class="td-total-num">￥<span class="num js_price">{$user_Cart.goods.shop_price * $user_Cart.number}</span></td>
+									<td class="td-del-btn">
+										<button type="button" class="btn-primary delete js_product-model " onclick="remove_goods('{$user_Cart.id}');" >删除</button>
+									</td>
+								</tr>
+								{/volist}
+								</tbody>
+							</table>
+						</div>
+				</div>
+				<div id="cart-empty" class="order-status-tips"  {if $is != 0} style="display: none;" {else} {/if}>
+					<p>您的购物车里空空如也，去逛逛吧~</p>
+					<div class="buttons choices">
+						<a href="/">
+							<button type="button" class="btn btn-big btn-light-green">去逛逛</button>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
-		{/if}
+
+
+		<div id="cart-command" class="section recommend"  {if $is != 0} style="display: none;" {else} {/if} >
+		<div class="section-header">
+		<div class="title">
+		<i class="icon_hand"></i>
+		<h2>相关推荐</h2>
+		</div>
+		</div>
+		<div class="section-content">
+		<div class="goods_list cf">
+
+			{volist name="goods" id="vo_goods"}
+
+		<div class="goods_wrap">
+			<div class="goods">
+				<div class="goods_pic">
+					<a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+					<img src="/static/uploads/{$vo_goods.og_thumb}" alt="{$vo_goods.goods_name}" width="220" height="220"></a>
+				</div>
+				<div class="goods_info">
+					<a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank">
+					<p class="goods_name" title="{$vo_goods.goods_name}">{$vo_goods.goods_name}</p>
+					</a>
+					<a href="{:url('index/Goods/index',array('id'=>$vo_goods.id))}" target="_blank" class="goods_like"><i class="icon_fulllove"></i></a>
+					<p class="goods_price">￥<span class="num">{$vo_goods.shop_price}</span></p>
+				</div>
+			</div>
+		</div>
+			{/volist}
+
+
+		</div>
+		</div>
+		</div>
+
+
+	</div>
 </div>
-	{include file='index@public/footer'}
-	<script>
-		// 删除单个商品
-		function remove_goods(cart_id) {
+
+
+<!--尾部-->
+{include file="index@public/footer"}
+<!--尾部end-->
+
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script type="text/javascript" src="/static/index/js/cart.15ad37ae.js"></script>
+<script src="/static/layer/jquery.min.js"></script>
+<script src="/static/layer/layer.js"></script>
+<script>
+    // 删除单个商品
+    function remove_goods(cart_id) {
+        layer.confirm('确定要删除此商品吗？',function(index){
             $.ajax({
                 url:"{:url('user/Cart/removeGoods')}",
                 type:"POST",
                 dataType:"json",
                 data:{
                     cart_id:cart_id
+                },
+                success:function (res) {
+                    if(res.code === -1){
+                        layer.alert(res.msg);
+                        $("#quantity").val(res);
+                    }else {
+                        window.location.reload();  //刷新父级页面
+                    }
+                }
+            });
+
+        });
+
+    }
+    function changeQty(s,goods_id) {
+        var quantity = $("#quantity"+goods_id).val();
+        if(quantity<1){
+            $("#quantity").val(1);
+        }
+        if(isNaN(quantity)){
+            $("#quantity").val(1);
+        }
+        if(s===0){
+            $.ajax({
+                url:"{:url('user/Cart/cartDelete')}",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    goods_id:goods_id
                 },
                 success:function (res) {
                     if(res.code === -1){
@@ -122,70 +203,44 @@
                     }
                 }
             });
-        }
-        function changeQty(s,goods_id) {
-            var quantity = $("#quantity"+goods_id).val();
-            if(quantity<1){
-                $("#quantity").val(1);
-            }
-            if(isNaN(quantity)){
-                $("#quantity").val(1);
-            }
-            if(s===0){
-                $.ajax({
-                    url:"{:url('user/Cart/cartDelete')}",
-                    type:"POST",
-                    dataType:"json",
-                    data:{
-                        goods_id:goods_id
-                    },
-                    success:function (res) {
-                        if(res.code === -1){
-                            layer.alert(res.msg)
-                            $("#quantity").val(res);
-                        }else {
-                            window.location.reload();  //刷新父级页面
-                        }
-                    }
-                });
-            }else {
-                $.ajax({
-                    url:"{:url('user/Cart/cartAdd')}",
-                    type:"POST",
-                    dataType:"json",
-                    data:{
-                        goods_id:goods_id
-                    },
-                    success:function (res) {
-                        if(res.code === -1){
-                            layer.alert(res.msg)
-                            $("#quantity"+goods_id).val(res.stock);
-                        }else {
-                            window.location.reload();  //刷新父级页面
-                        }
-                    }
-                });
-            }
-
-        }
-
-        function truncate() {
+        }else {
             $.ajax({
-                url:"{:url('user/Cart/truncate')}",
+                url:"{:url('user/Cart/cartAdd')}",
                 type:"POST",
                 dataType:"json",
+                data:{
+                    goods_id:goods_id
+                },
                 success:function (res) {
                     if(res.code === -1){
                         layer.alert(res.msg)
-                        $("#quantity").val(res);
+                        $("#quantity"+goods_id).val(res.stock);
                     }else {
                         window.location.reload();  //刷新父级页面
                     }
                 }
             });
-
         }
-	</script>
+
+    }
+
+    function truncate() {
+        $.ajax({
+            url:"{:url('user/Cart/truncate')}",
+            type:"POST",
+            dataType:"json",
+            success:function (res) {
+                if(res.code === -1){
+                    layer.alert(res.msg)
+                    $("#quantity").val(res);
+                }else {
+                    window.location.reload();  //刷新父级页面
+                }
+            }
+        });
+
+    }
+</script>
 
 </body>
 </html>

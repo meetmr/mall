@@ -1,299 +1,264 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<title>PHPMall {$goodsInfo.goods_name}</title>
-	<meta name="keywords" content=""/>
-	<meta name="description" content=""/>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0" />	
-	<link rel="stylesheet" href="/static/index/css/base_1.css" />
-	<link rel="stylesheet" href="/static/index/css/goods.css" />
-	<script src="/static/index/js/jquery-2.1.4.min_1.js"></script>
-	<script src="/static/index/js/jquery-migrate-1.2.1.min_1.js"></script>
+	<meta name="Copyright" content="{$confRes.miaoshu}"/>
+	<meta name="Keywords" content="{$confRes.sitename}"/>
+	<meta name="Description" content="{$confRes.miaoshu}"/>
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-store.8e8389f4.css">
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
 	<script src="/static/layer/layer.js"></script>
-	<link type="image/x-icon" href="/public/uploads/cache/images/osc1/store/index-16x16.jpg" rel="icon">
-	<link type="image/x-icon" href="/public/uploads/cache/images/osc1/store/index-16x16.jpg" rel="bookmark">
 </head>
 <body>
-	<div class="com-top-nav w">
-	<div class="wcp-wrap">
-	</div>
+
+<div id="header" class="header">
+	<!--个人状态-->
+	{include file="public/topmenu"}
+	<!--个人状态end-->
+	<!--导航栏-->
+	{include file="public/topnav"}
+	<!--导航栏end-->
+
 </div>
-	{include file='public/header'}
-<div class="wcp_wrap">
-	<div class="list_crumb">
-		<ul class="list_crumb_list">
-			<li class="classify"><a href="/">首页</a><i class="crumb_arrow"></i></li>
-					<li class="classify">
-							<a  href="{:url('index/Categorys/index',array('id'=>$goodsInfo.category.id))}"  >{$goodsInfo.category.cate_name}</a>
-							<i class="crumb_arrow"></i>
-					</li>
-			<li><a href="javascript:;">{$goodsInfo.goods_name}</a></li>
-		</ul>
-	</div>
-	<div class="detail-ctr clearfix">
-		<div class="dtl-info clearfix">
-			<div class="preview">					
-					<div class="smallImg">
-						<div id="imageMenu">
-							<ul id="images_0"  >
-								{volist name="$goodsInfo.images" id="images"}
-								<li data-bimg="/{$images.img_path}">
-									<img width="100%" src="/{$images.img_path}" />
-								</li>
-								{/volist}
-							</ul>
-						</div>
-					</div>
-					<div class="bigImg" id="vertical">
-						<img width="600" height="600" style= "margin-top:0px;" id="midimg" class="loading" src="" />
-					</div>
+
+
+<div class="content">
+	<ol class="breadcrumb">
+		<li><a href="/">商品分类</a><span class="diagonal">/</span></li>
+		<li><a href="javascript:void(0);" class="active">{$goodsInfo.goods_name}</a></li>
+	</ol>
+	<div class="product-intro cf">
+		<div class="product-preview">
+			<div class="product-img">
+				<img id="productMainPic" src="/static/uploads/{$goodsInfo.og_thumb}">
 			</div>
-			<div class="pro-info-dtl">
-				<div class="pro-detail-hd">
-					<h1>
-						<span class="fl">{$goodsInfo.goods_name} </span><span class="exp-style">货号：<span id="sn">{$goodsInfo.goods_code}</span></span>
-					</h1>
-					<a class="start-comment" href="javascript:;"></a>
-				</div>
-				<div class="pro-sales-list">
-							<p class="pro-sales-item">
-								<b class="c-red">&yen; </b><b class="current_price c-red">{$goodsInfo.shop_price}</b>
-							</p>
-							<p class="pro-sales-item">市场价：<span id="market-price">&yen; {$goodsInfo.markte_price}</span></p>
-												
-						<p class="pro-sales-item">库存量：<span id="store_quantity">{$goodsInfo.stock}</span> </p>
-				
-				</div>
-				<!--规格-->
-				<div id="selectbox" class="selectbox">
-					<dl class="spec-item clearfix">
+			<div class="thumbnails">
+				<ul class="thumbnail-list cf">
+					{volist name="$goodsInfo.images" id="images"}
+					<li class="thumbnail-item active">
+						<a href="javascript:void(0);"><img src="/{$images.img_path}" alt="{$goodsInfo.goods_name}"></a>
+					</li>
+					{/volist}
+				</ul>
+			</div>
+		</div>
+		<div class="product-info">
+			<div class="product-name">
+				<h2 class="title">{$goodsInfo.goods_name}</h2>
+				<p class="txt">{$goodsInfo.goods_name}</p>
+			</div>
+			<div class="product-price">
+				<p><span class="current-price">￥<span id="salePrice" class="num">{$goodsInfo.shop_price}</span></span>
+					<del class="old-price">原价￥<span id="price" class="num">{$goodsInfo.markte_price}</span></del>
+				</p>
+			</div>
+
+				<div class="product-custom">
+					<h3>商品属性</h3>
+					<ul class="">
 						{volist name="$goodsInfo.product" id="product"}
-						<dt>{$product.name}：<span>{$product.detail}</span></dt>
+						<li class="custom-item"  >{$product.name}：{$product.detail}</li>
 						{/volist}
-					</dl>
+					</ul>
 				</div>
-				<!--规格-->
-				<div class="sumbox">
-					<div class="select_number">	
-						<input type="text" onkeyup='change_quantity("{$goodsInfo.id}",this);' name="quantity" size="2" value="1" id="quantity" class="text">
-						<button onclick='changeQty(1,"{$goodsInfo.id}");' class="increase">+</button>
-						<button onclick='changeQty(0,"{$goodsInfo.id}");' class="decrease">-</button>
+
+				<div class="product-quantity"  >
+					<h3>数量</h3>
+					<div id="quantityInput" class="quantity-input">
+						<button type="button" class="reduce">
+							<i class="icon-reduce"   onclick='changeQty(0,"{$goodsInfo.id}");' ></i>
+						</button>
+						<input type="text" onkeyup='change_quantity("{$goodsInfo.id}",this);'  name="quantity"  id="quantity" class="quantity-input-tx" value="1">
+						<button type="button" class="add">
+							<i class="icon-add" onclick='changeQty(1,"{$goodsInfo.id}");' ></i>
+						</button>
 					</div>
-					<div class="buttonbox">
-							{if $Think.session.user}
-							 <input type="button" {if $goodsInfo.stock == 0} disabled value="暂无库存" {else}  value="加入购物车"   {/if}  class="dtl-cart buy"  onclick="addCatr('{$goodsInfo.id}')">
-							 <input type="button" value="立即购买" rel="buy" class="buy" style="background-color: #d00;"  ctype='p80xgpxoq1'>
+						<span id="quantityTips" class="stock-txt">
+							{if $goodsInfo.stock != 0}
+								( 还剩{$goodsInfo.stock}件 )
 							{else}
-							<a href="{:url('user/login/login')}"><input type="button" value="加入购物车" class="dtl-cart buy" ></a>
-							<a href="{:url('user/login/login')}"><input type="button" value="立即购买" rel="buy" class="buy" style="background-color: #d00;" ></a>
-						{/if}
-					</div>
+								( 库存不足 )
+							{/if}
+						</span>
 				</div>
-			
-		</div>			
-	</div>
-	<div class="maybe-like">
 
+				<div class="product-buy">
+					{if $goodsInfo.stock != 0}
+					{if $Think.session.user}
+					<a href="javascript:void(0);" id="" onclick="addCatr('{$goodsInfo.id}')" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
+					<a href="javascript:void(0);" id="buyNowButton" class="js_buy-button btn btn-big btn-red buy">立即购买</a>
+					<i class="fly-item" id="fly-item"></i>
+					{else}
+					<a href="{:url('user/login/login')}" id="addToCartButton" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
+					<a href="{:url('user/login/login')}"  id="buyNowButton" class="js_buy-button btn btn-big btn-red buy">立即购买</a>
+					<i class="fly-item" id="fly-item"></i>
+					{/if}
+					{else}
+					<a href="javascript:void(0);" class="js_oversold-button btn btn-big btn-disabled soldout" >已售罄</a>
+					{/if}
+				</div>
+		</div>
 	</div>
-	<div class="pro-dtl-ctr">
-				<div class="pro-dtl-menu">
-					<a class="current" href="javascript:;">产品细节 <i></i></a> <a href="javascript:;" class="">商品评价 <i></i></a>
-				</div>
-				<div class="detail-box" style="display: block;">
-					<?php echo $goodsInfo['goods_des'];?>
-				</div>
+	<div id="productDetail" class="product-detail">
+		<div class="detail-subnav">
+			<ul class="cf">
+				<li class="subnav-item active">
+					<a href="javascript:void(0);">商品详情</a>
+					<i class="horizontal-line"></i>
+				</li>
+				<li class="subnav-item">
+					<a href="javascript:void(0);">联系商家</a>
+					<i class="horizontal-line"></i>
+				</li>
+			</ul>
+		</div>
+		<div class="detail-content">
+			<div class="content-item contact_item active">
+
+				<img src="/static/index/picture/931d529b1bdf413e9b95e2698dd664b1.gif" border="0" width="990" height="1488" alt="" /><img src="/static/index/picture/878505f91d5448a99c6470e482485c23.gif" border="0" width="750" height="931" alt="" /><img src="/static/index/picture/6139bd7afebb4de5a519075eb108f404.gif" border="0" width="990" height="1192" alt="" /><img src="/static/index/picture/2df7d4bb3a444513ba8201693ead3d49.gif" border="0" width="990" height="1145" alt="" /><img src="/static/index/picture/ebf2c77ad33f465c8e1b62b8a202f280.gif" border="0" width="990" height="966" alt="" /><img src="/static/index/picture/759665d6c03344c08dc3a1e2026fdbbd.gif" border="0" width="990" height="1380" alt="" /><img src="/static/index/picture/e958056c8781459c9d072e070d8ca9a6.gif" border="0" width="990" height="1358" alt="" /><img src="/static/index/picture/ccc9be2c483d40609e181d535ec1ef5d.gif" border="0" width="990" height="1018" alt="" /><img src="/static/index/picture/8edee73dfe034645bd18269ebeea095a.gif" border="0" width="990" height="1321" alt="" /><img src="/static/index/picture/6665a6f6222e443d9c29ef77f122b906.gif" border="0" width="990" height="906" alt="" /><img src="/static/index/picture/c2a950ab51084108b64b4ec00743a757.gif" border="0" width="990" height="752" alt="" /><img src="/static/index/picture/3a322a763fb54545a03ae7d494c5bf0e.gif" border="0" width="990" height="742" alt="" /><img src="/static/index/picture/4454fd3ffb3043908aeefb7ecaca7646.gif" border="0" width="990" height="752" alt="" /><img src="/static/index/picture/53fe0c89c1f04863bca65aac33a74b2a.gif" border="0" width="990" height="744" alt="" /><img src="/static/index/picture/7451b09bdb3d477cb8f59be240b94206.gif" border="0" width="990" height="746" alt="" /><img src="/static/index/picture/316c217aa0b24f7683a2091317bde013.gif" border="0" width="990" height="747" alt="" /><img src="/static/index/picture/fb294e95e3ae439399c63cab3d0d6758.gif" border="0" width="990" height="592" alt="" /><img src="/static/index/picture/821845c56a514966b72d1564b3baa897.gif" border="0" width="990" height="2038" alt="" />
+			</div>
+			<div class="content-item contact_item">
+				<dl class="contact_company">
+					<dt>商家：北京蓝桃文化股份有限公司</dt>
+					<dd>
+						<div></div>
+					</dd>
+				</dl>
+
+				<dl class="contact_method">
+					<dt>商家联系方式</dt>
+					<dd>
+						<div>电话：18001165184</div>
+						<div>ＱＱ：2448637204</div>
+						<div>微信：lantaosunsea</div>
+						<div>邮箱：wangyu001@lantaochina.com</div>
+					</dd>
+				</dl>
+				<dl class="contact_time">
+					<dt>商家服务时间</dt>
+					<dd>
+						<div>在线时间：上午十点至晚上七点</div>
+						<div class="concat_notice"></div>
+
+						<div class="contact_service">
+
+							<a target="_blank" href="http://m.jifen.qq.com/pc/serviceqq?shopId=2&uin=2448637204&pf=pc.pay.zh" title="怪奇鹅">怪奇鹅</a>
+
+						</div>
+					</dd>
+				</dl>
+
+			</div>
+		</div>
 	</div>
 </div>
-</div>
-	<!--底部-->
-	{include file='public/footer'}
+
 <script>
- var navtoTop = $(".nav").offset().top + $(".nav").height();
-    var topNavTop = $(".nav").offset().top;
-    $(".right-sidebar").css('top', topNavTop + 'px');
-    $(".go-to-top").fadeOut(100);
-
-    $(window).scroll(function() {
-        var scrollHeight = $(window).scrollTop();
-        if (scrollHeight <= navtoTop) {
-            $(".right-sidebar").css('top', topNavTop + 'px');
-            $(".nav").removeClass("fixed-nav");
-            $(".go-to-top").fadeOut(100);
-            $(".right-sidebar .account-box").css('bottom', topNavTop + 'px');
-            $(".sidebar-box .like-show-more,.sidebar-box .saw-show-more").css('margin-bottom', topNavTop * 2 + 'px');
-        } else if (scrollHeight > navtoTop) {
-            $(".right-sidebar").css('top', '0px');
-            $(".nav").addClass("fixed-nav");
-            $(".go-to-top").fadeIn(100);
-            $(".right-sidebar .account-box").css('bottom', '0');
-            $(".all-styles-tab").hide();
-
-            $(".fixed-nav .main-nav .all-styles").hover(function() {
-                $(this).find(".all-styles-tab").show();
+    // 加入购物车
+    function addCatr(goods_id) {
+        var quantity = $("#quantity").val();  // 商品数量
+        $.ajax({
+            url:"{:url('user/Cart/addCart')}",
+            type:"POST",
+            dataType:"json",
+            data:{
+                goods_id:goods_id,
+                quantity:quantity
             },
-            function() {
-                $(this).find(".all-styles-tab").hide();
-            });
-            $(".sidebar-box .like-show-more,.sidebar-box .saw-show-more").css('margin-bottom', topNavTop + 'px');
-        }
-    });
+            success:function (res) {
+                if(res.code === -1){
+                    $("#quantity").val(1);
 
-</script>
-<script>
- // 更改数量
- function changeQty(num,goods_id) {
-     // 获取现有的数量
-	 var quantity = $("#quantity").val();
-	 if (num === 0){
-       	if(quantity == 1 || quantity < 1){
-            layer.alert('最小起订量是1 件');
-            $("#quantity").val(1);
-
-            return ;
-		}else {
-             $("#quantity").val(quantity-1);
-		}
-	 }else {
-	      // 通过ajax请求 查询商品库存。
-         $.ajax({
-             url:"{:url('index/Goods/getGoodsStock')}",
-             type:"POST",
-             dataType:"json",
-             data:{
-                 goods_id:goods_id
-             },
-             success:function (res) {
-				if(quantity >= res){
-					layer.alert('该商品数量不足，剩余 '+ res+' 件')
-                    $("#quantity").val(res);
-				}else {
-                    $("#quantity").val(parseInt(quantity) + 1);
+                    return layer.alert(res.msg)
+                }else if(res.code === 1) {
+                    $("#quantity").val(1);
+                    $("#cartNum").html(res.count);
+                    return layer.alert(res.msg)
                 }
-             }
-         });
+            }
+        });
+    }
 
-     }
- }
- function change_quantity(goods_id,obj) {
-     var quantity = $(obj).val();
-     if(quantity<1){
-         $("#quantity").val(1);
-	 }
-	 if(isNaN(quantity)){
-         $("#quantity").val(1);
-	 }
-     // 通过ajax请求 查询商品库存。
-     $.ajax({
-         url:"{:url('index/Goods/getGoodsStock')}",
-         type:"POST",
-         dataType:"json",
-         data:{
-             goods_id:goods_id
-         },
-         success:function (res) {
-             if(quantity > res){
-                 layer.alert('该商品数量不足，剩余 '+ res+' 件')
-                 $("#quantity").val(res);
-             }
-         }
-     });
- }
+    var cur_action=null;
 
- // 加入购物车
- function addCatr(goods_id) {
-     var quantity = $("#quantity").val();  // 商品数量
-     $.ajax({
-         url:"{:url('user/Cart/addCart')}",
-         type:"POST",
-         dataType:"json",
-         data:{
-             goods_id:goods_id,
-             quantity:quantity
-         },
-         success:function (res) {
-             if(res.code === -1){
-                 $("#quantity").val(1);
-                 return layer.alert(res.msg)
-             }else if(res.code === 1) {
-                 $("#quantity").val(1);
-                 $(".cart-num").html(res.count);
-                 return layer.alert(res.msg)
-			 }
-         }
-     });
- }
+    // 更改数量
+    function changeQty(num,goods_id) {
+        // 获取现有的数量
+        var quantity = $("#quantity").val();
+        if (num === 0){
+            if(quantity == 1 || quantity < 1){
+                layer.alert('最小起订量是1 件');
+                $("#quantity").val(1);
 
-var cur_action=null;
-var last_action=null;
-var flag=0;
-//滑动动画
-function right_sidebar_animate(id){
-	
-	cur_action=id;
-	
-	if(cur_action==id&&flag==0){	
-		 last_action=id;		 
-		 $('.right-sidebar').animate({right: "0px"},600);
-         $('.sidebar-box-item').addClass("hide");
-         $('#'+id).removeClass("hide");
-         flag=1
-	}else if(cur_action==last_action&&flag==1){
-		$('.right-sidebar').animate({right: "-280px"},'fast');
-		cur_action=null;
-		last_action=null;
-		flag=0;		
-		return;
-	}else if(last_action!=cur_action){		
-		flag=1;	
-		last_action=id;		
-		$('.sidebar-box-item').addClass("hide");
-        $('#'+id).removeClass("hide");			
-	}
-}
-//关闭右边栏菜单
-$('.sidebar-box-close').click(function(){
-	cur_action=null;
-	last_action=null;
-	flag=0;	
-	$('.right-sidebar').animate({right: "-280px"},'fast');	
-});
+                return ;
+            }else {
+                $("#quantity").val(quantity-1);
+            }
+        }else {
+            // 通过ajax请求 查询商品库存。
+            $.ajax({
+                url:"{:url('index/Goods/getGoodsStock')}",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    goods_id:goods_id
+                },
+                success:function (res) {
+                    if(quantity >= res){
+                        layer.alert('该商品数量不足，剩余 '+ res+' 件')
+                        $("#quantity").val(res);
+                    }else {
+                        $("#quantity").val(parseInt(quantity) + 1);
+                    }
+                }
+            });
 
+        }
+    }
 
-
-//回到顶部
-$(".go-to-top").click(function() {
-			$('body,html').animate({
-				scrollTop: 0
-			},
-			"fast");
-			return false;
-	}); 	
-</script>
-
-<script src="/static/index/js/common_1.js"></script>
-
-<script src="/static/index/js/jquery.raty.min.js"></script>
-<script>
-
-
-
-$(function(){
-	$('#imageMenu ul:first li:first').trigger('click');
-});
-//图册缩略图点击
-$('#imageMenu li').click(function(){
-	$('#imageMenu li').removeClass('click');
-	$(this).addClass('click');
-	var src=$(this).attr('data-bimg');
-	$("#midimg").attr("src", src);
-});
-
-
+    function change_quantity(goods_id,obj) {
+        var quantity = $(obj).val();
+        if(quantity<1){
+            $("#quantity").val(1);
+        }
+        if(isNaN(quantity)){
+            $("#quantity").val(1);
+        }
+        // 通过ajax请求 查询商品库存。
+        $.ajax({
+            url:"{:url('index/Goods/getGoodsStock')}",
+            type:"POST",
+            dataType:"json",
+            data:{
+                goods_id:goods_id
+            },
+            success:function (res) {
+                if(quantity > res){
+                    layer.alert('该商品数量不足，剩余 '+ res+' 件')
+                    $("#quantity").val(res);
+                }
+            }
+        });
+    }
 
 
 </script>
+<!--尾部-->
+{include file="public/footer"}
+<!--尾部end-->
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
 
+<script>var gConfigs = {
+    js: {"cgiHost":"//jifen.qq.com"},
+	productId: 4380, userJifen: 945,
+	specLength: 1 };
+</script>
+
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script type="text/javascript" src="/static/index/js/item.5532932b.js"></script>
+<script>logData.report('pcjifen.item.pv', {productid: "4380"})</script>
+</body>
 </html>

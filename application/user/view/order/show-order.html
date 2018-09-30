@@ -1,94 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>结算-PHPMall</title>
-    <meta name="keywords" content="结算-PHPMall"/>
-    <meta name="description" content="结算-PHPMall"/>
-    <link rel="stylesheet" href="/static/user/css/base.css" />
-    <link rel="stylesheet" href="/static/user/css/cart.css" />
-    <link rel="stylesheet" href="/static/layui/css/layui.css" />
-    <script src="/static/user/js/jquery-2.1.4.min.js"></script>
-    <script src="/static/user/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="/static/layer/layer.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>支付中心</title>
+    <meta name="Copyright" content="{$confRes.miaoshu}"/>
+    <meta name="Keywords" content="{$confRes.sitename}"/>
+    <meta name="Description" content="{$confRes.miaoshu}"/>
+    <link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-cart.89694c91.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
 
 </head>
 <body>
-<div class="com-top-nav w">
-    <div class="wcp-wrap">
 
-    </div>
+<div id="header" class="header">
+    <!--个人状态-->
+    {include file="index@public/topmenu"}
+    <!--个人状态end-->
+    <!--导航栏-->
+    {include file="index@public/topnav"}
+    <!--导航栏end-->
+
 </div>
-<!--头部-->
-{include file='index@public/header'}
-<div class="layui-container">
-    <div style="font-size: 18px;margin-top: 2em;margin-bottom: 1em">订单提交成功！	<span class="close endtime" value="<?php echo ($order['close_time']);?>">	</span></div>
-    <div class="layui-row">
-        <div class="layui-card">
-            <div class="layui-card-header">订单详情</div>
-            <div class="layui-card-body">
-                <div class="w_cart_inner">
-                    <table class="w_cart_table">
-                        <thead>
-                        <tr>
-                            <td>订单编号</td>
-                            <td>收获地址</td>
-                            <td style="text-align: left">总价</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        </thead>
 
-                        <tr class="item">
-                            <td>{$order.order_id}</td>
-                            <?php $address = json_decode($order['address']) ;?>
-                            <td class="p-img">
-                                    （<?php echo $address->name ?>）  <?php echo $address->detailed ?>
-                            </td>
-                            <td class="p-name">
-                                {$order.payment}
-                            </td>
-                            <td class="p-price">
+<div class="content">
+    <div class="order step1">
+        <div class="order-header">
+            <h2 class="title">确认订单</h2>
 
-                            </td>
-                            <td class="p-quantity">
-                                <img src="{:url('user/order/wxewm',array('orderCode'=>$order.id))}"   width="150">
-                            </td>
-                            <td class="p-remove"></td>
-                        </tr>
-
-                        <tr class="cart_toolbar">
-                            <td colspan="5">
-                                <div style="width: 200px;" class="control">
-                                </div>
-                            </td>
-
-                            <td class="total_box" colspan="6">
-                                <p>
-                                    <label for="应付金额">总计</label> <span id="Jfinal" class="c_red total_price">¥<i></i>{$order.payment}</span>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr class="cart_total">
-                            <td colspan="8">
-
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="buy-process">
+                <ul class="process-list">
+                    <li class="process-item item-1 ">确认订单信息</li>
+                    <li class="process-item item-2 current">支付订单</li>
+                </ul>
             </div>
         </div>
+        <div class="order-body">
+            <div class="order-section order-detail">
+                <span class="close endtime" value="<?php echo ($order['close_time']);?>">	</span><br>
+                <table class="order-detail-table">
+                    <thead>
+                    <tr>
+                        <th class="supplier">订单号</th>
+                        <th class="unit-price">收获地址</th>
+                        <th class="amount">总价</th>
+                        <th class="total"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr >
+                        <td>
+                            {$order.order_id}
+                        </td>
+                        <?php $address = json_decode($order['address']) ;?>
+                        <td class="p-img">
+                            （<?php echo $address->name ?>）  <?php echo $address->detailed ?>
+                        </td>
+                        <td><span class="num">{$order.payment}</span></td>
+                        <td>
+                            <img src="{:url('user/order/wxewm',array('orderCode'=>$order.id))}"   width="150">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
+        </div>
     </div>
 </div>
-{include file='index@public/footer'}
+
+<!--尾部-->
+{include file="index@public/footer"}
+<!--尾部end-->
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script type="text/javascript" src="/static/index/js/cart.15ad37ae.js"></script>
+<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/static/layer/layer.js"></script>
 <script>
     $(function(){
-      x = setInterval(function(){
+        x = setInterval(function(){
             var order_code = "{$order.id}";
             $.ajax({
                 url:"{:url('user/order/invalidOrder')}",
@@ -116,20 +107,22 @@
 
     $(function(){
         setInterval(function(){
-                var endTime = $(".endtime").attr('value');
-                var timestamp = Date.parse(new Date());
-                var nMS= (endTime-(timestamp/1000)) * 1000;
-                var myD=Math.floor(nMS/(1000 * 60 * 60 * 24)); //天
-                var myH=Math.floor(nMS/(1000*60*60)) % 24; //小时
-                var myM=Math.floor(nMS/(1000*60)) % 60; //分钟
-                var myS=Math.floor(nMS/1000) % 60; //秒
-                if(myD>= 0){
-                    var str = "请在"+myH+"小时"+myM+"分"+myS+"秒内支付";
-                }else{
-                    var str = "";
-                }
-             $(".endtime").html(str);
+            var endTime = $(".endtime").attr('value');
+            var timestamp = Date.parse(new Date());
+            var nMS= (endTime-(timestamp/1000)) * 1000;
+            var myD=Math.floor(nMS/(1000 * 60 * 60 * 24)); //天
+            var myH=Math.floor(nMS/(1000*60*60)) % 24; //小时
+            var myM=Math.floor(nMS/(1000*60)) % 60; //分钟
+            var myS=Math.floor(nMS/1000) % 60; //秒
+            if(myD>= 0){
+                var str = "请在"+myH+"小时"+myM+"分"+myS+"秒内支付";
+            }else{
+                var str = "";
+            }
+            $(".endtime").html(str);
         }, 1000); //每个0.1秒执行一次
     });
 
 </script>
+</body>
+</html>
