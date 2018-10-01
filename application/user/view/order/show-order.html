@@ -26,7 +26,7 @@
 <div class="content">
     <div class="order step1">
         <div class="order-header">
-            <h2 class="title">确认订单</h2>
+            <h2 class="title">支付订单</h2>
 
             <div class="buy-process">
                 <ul class="process-list">
@@ -37,26 +37,24 @@
         </div>
         <div class="order-body">
             <div class="order-section order-detail">
-                <span class="close endtime" value="<?php echo ($order['close_time']);?>">	</span><br>
+                <span class="close endtime" value="<?php echo ($order['close_time']);?>">	</span><br><br>
                 <table class="order-detail-table">
                     <thead>
                     <tr>
-                        <th class="supplier">订单号</th>
-                        <th class="unit-price">收获地址</th>
-                        <th class="amount">总价</th>
-                        <th class="total"></th>
+                        <th>订单号</th>
+                        <th width="40%">收获地址</th>
+                        <th>总价</th>
+                        <th>扫码支付</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr >
-                        <td>
+                    <tr>
+                        <td style="line-height: 100px;"">
                             {$order.order_id}
                         </td>
                         <?php $address = json_decode($order['address']) ;?>
-                        <td class="p-img">
-                            （<?php echo $address->name ?>）  <?php echo $address->detailed ?>
-                        </td>
-                        <td><span class="num">{$order.payment}</span></td>
+                        <td style="line-height: 100px;"">（<?php echo $address->name ?>）  <?php echo $address->detailed ?></td>
+                        <td style="padding-left: 120px;line-height: 100px;">{$order.payment}</td>
                         <td>
                             <img src="{:url('user/order/wxewm',array('orderCode'=>$order.id))}"   width="150">
                         </td>

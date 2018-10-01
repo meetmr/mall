@@ -63,9 +63,11 @@ class Cart extends BaseController
                 // 修改购物车对应的商品数量
                 $info = CartModel::update(['number'=>$number],['g_id'=>$data['goods_id']]);
                 if($info){
+                    $count =  CartModel::where(['u_id'=>$user_id])->select()->count();
                     $state = [
                         'code'  =>  1,
-                        'msg'   =>  '加入购物车成功'
+                        'msg'   =>  '加入购物车成功',
+                        'count' =>  $count
                     ];
                     return json($state);
                 }else{

@@ -13,7 +13,7 @@ use app\admin\model\Goods;
 
 class Categorys extends BaseController
 {
-    public function index($id){
+    public function index($id,$order = ''){
         // 获取顶级分类
         $classification = Category::getGoodsCategoryInfoDingji($id);
         $goods = Goods::getCategoryGoods($id);

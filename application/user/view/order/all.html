@@ -3,14 +3,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<title>我的购物车-腾讯积分商城</title>
-	<meta name="Copyright" content="Tencent"/>
-	<meta name="Keywords" content="腾讯积分商城"/>
-	<meta name="Description" content="腾讯积分商城"/>
-
+	<title>结算-PHPMall</title>
+	<meta name="Copyright" content="{$confRes.miaoshu}"/>
+	<meta name="Keywords" content="{$confRes.sitename}"/>
+	<meta name="Description" content="{$confRes.miaoshu}"/>
 	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-cart.89694c91.css"/>
 	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
-	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+	<script src="/static/layer/jquery.min.js"></script>
 	<script src="/static/layer/layer.js"></script>
 </head>
 <body>
@@ -38,7 +37,6 @@
 			</div>
 		</div>
 		<div class="order-body">
-			<form id="payForm" method="post" action="/pc/wechat-buy?pf=vip_m-jifen-pc">
 				<div id="addressHolder" class="order-section address">
 					<div class="order-section-header">
 						<p class="order-sub-title">  &nbsp;确认收货地址、收货人、联系方式</p>
@@ -94,10 +92,10 @@
 									<a class="product-name" href="{:url('index/Goods/index',array('id'=>$user_Cart.goods.id))}" target="_blank">{$user_Cart.goods.goods_name}</a>
 								</div>
 							</td>
-							<td>￥<span class="js_realPrice_0 num">{$user_Cart.goods.shop_price}</span></td>
-							<td><span class="num">{$user_Cart.number}</span></td>
+							<td style="padding-left: 40px;">￥<span class="js_realPrice_0 num">{$user_Cart.goods.shop_price}</span></td>
+							<td style="padding-left: 110px;"><span class="num">{$user_Cart.number}</span></td>
 
-							<td>￥<span class="js_totalFee_0 num">{$user_Cart.number * $user_Cart.goods.shop_price}</span>
+							<td style="padding-left: 60px;">￥<span class="js_totalFee_0 num">{$user_Cart.number * $user_Cart.goods.shop_price}</span>
 							</td>
 						</tr>
 						{/volist}
@@ -130,7 +128,6 @@
 						<button  onclick="order()" type="button" class="btn btn-big btn-green">确认</button>
 					</div>
 				</div>
-			</form>
 		</div>
 	</div>
 </div>
@@ -173,7 +170,8 @@
         var address_is = $("#address_is").val();
         if(address_is == 0){
             layer.alert('请添加收获地址后再尝试下单',function () {
-                location.href = "{:url('user/user/addAddress')}";
+                layer.msg('加载中');
+                x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600);
             });
             return;
         }
@@ -189,7 +187,8 @@
             success:function (res) {
                 if(res.code == -1){
                     layer.alert(res.msg,function () {
-                        location.href = "{:url('user/user/addAddress')}";
+                        layer.msg('加载中');
+                        x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600);
                     })
                 }else if(res.code == 1){
                     layer.alert('下单成功！请支付',function () {

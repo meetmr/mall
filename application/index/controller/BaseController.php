@@ -102,7 +102,7 @@ class BaseController extends Controller
 
     // 获取订单
     public function getOrder(){
-        $order = Order::where(['user_id'=>session('user.id')])->select();
+        $order = Order::where(['user_id'=>session('user.id')])->order('id desc')->paginate(6);
         return $order;
     }
 

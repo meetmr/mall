@@ -9,7 +9,7 @@
 	<meta name="Description" content="{$confRes.miaoshu}"/>
 	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-store.8e8389f4.css">
 	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
-	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+	<script src="/static/layer/jquery.min.js"></script>
 	<script src="/static/layer/layer.js"></script>
 </head>
 <body>
@@ -68,12 +68,12 @@
 				<div class="product-quantity"  >
 					<h3>数量</h3>
 					<div id="quantityInput" class="quantity-input">
-						<button type="button" class="reduce">
-							<i class="icon-reduce"   onclick='changeQty(0,"{$goodsInfo.id}");' ></i>
+						<button type="button"  onclick='changeQty(0,"{$goodsInfo.id}");' class="reduce">
+							<i class="icon-reduce"   ></i>
 						</button>
 						<input type="text" onkeyup='change_quantity("{$goodsInfo.id}",this);'  name="quantity"  id="quantity" class="quantity-input-tx" value="1">
-						<button type="button" class="add">
-							<i class="icon-add" onclick='changeQty(1,"{$goodsInfo.id}");' ></i>
+						<button type="button" onclick='changeQty(1,"{$goodsInfo.id}");'  class="add">
+							<i class="icon-add" ></i>
 						</button>
 					</div>
 						<span id="quantityTips" class="stock-txt">
@@ -88,11 +88,11 @@
 				<div class="product-buy">
 					{if $goodsInfo.stock != 0}
 					{if $Think.session.user}
-					<a href="javascript:void(0);" id="" onclick="addCatr('{$goodsInfo.id}')" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
+					<a href="javascript:void(0);" id="addToCartButton" onclick="addCatr('{$goodsInfo.id}')" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
 					<a href="javascript:void(0);" id="buyNowButton" class="js_buy-button btn btn-big btn-red buy">立即购买</a>
 					<i class="fly-item" id="fly-item"></i>
 					{else}
-					<a href="{:url('user/login/login')}" id="addToCartButton" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
+					<a href="{:url('user/login/login')}" id="" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
 					<a href="{:url('user/login/login')}"  id="buyNowButton" class="js_buy-button btn btn-big btn-red buy">立即购买</a>
 					<i class="fly-item" id="fly-item"></i>
 					{/if}
@@ -110,46 +110,17 @@
 					<i class="horizontal-line"></i>
 				</li>
 				<li class="subnav-item">
-					<a href="javascript:void(0);">联系商家</a>
+					<a href="javascript:void(0);">商品评论</a>
 					<i class="horizontal-line"></i>
 				</li>
 			</ul>
 		</div>
 		<div class="detail-content">
 			<div class="content-item contact_item active">
-
-				<img src="/static/index/picture/931d529b1bdf413e9b95e2698dd664b1.gif" border="0" width="990" height="1488" alt="" /><img src="/static/index/picture/878505f91d5448a99c6470e482485c23.gif" border="0" width="750" height="931" alt="" /><img src="/static/index/picture/6139bd7afebb4de5a519075eb108f404.gif" border="0" width="990" height="1192" alt="" /><img src="/static/index/picture/2df7d4bb3a444513ba8201693ead3d49.gif" border="0" width="990" height="1145" alt="" /><img src="/static/index/picture/ebf2c77ad33f465c8e1b62b8a202f280.gif" border="0" width="990" height="966" alt="" /><img src="/static/index/picture/759665d6c03344c08dc3a1e2026fdbbd.gif" border="0" width="990" height="1380" alt="" /><img src="/static/index/picture/e958056c8781459c9d072e070d8ca9a6.gif" border="0" width="990" height="1358" alt="" /><img src="/static/index/picture/ccc9be2c483d40609e181d535ec1ef5d.gif" border="0" width="990" height="1018" alt="" /><img src="/static/index/picture/8edee73dfe034645bd18269ebeea095a.gif" border="0" width="990" height="1321" alt="" /><img src="/static/index/picture/6665a6f6222e443d9c29ef77f122b906.gif" border="0" width="990" height="906" alt="" /><img src="/static/index/picture/c2a950ab51084108b64b4ec00743a757.gif" border="0" width="990" height="752" alt="" /><img src="/static/index/picture/3a322a763fb54545a03ae7d494c5bf0e.gif" border="0" width="990" height="742" alt="" /><img src="/static/index/picture/4454fd3ffb3043908aeefb7ecaca7646.gif" border="0" width="990" height="752" alt="" /><img src="/static/index/picture/53fe0c89c1f04863bca65aac33a74b2a.gif" border="0" width="990" height="744" alt="" /><img src="/static/index/picture/7451b09bdb3d477cb8f59be240b94206.gif" border="0" width="990" height="746" alt="" /><img src="/static/index/picture/316c217aa0b24f7683a2091317bde013.gif" border="0" width="990" height="747" alt="" /><img src="/static/index/picture/fb294e95e3ae439399c63cab3d0d6758.gif" border="0" width="990" height="592" alt="" /><img src="/static/index/picture/821845c56a514966b72d1564b3baa897.gif" border="0" width="990" height="2038" alt="" />
+					<?php echo $goodsInfo['goods_des'];?>
 			</div>
 			<div class="content-item contact_item">
-				<dl class="contact_company">
-					<dt>商家：北京蓝桃文化股份有限公司</dt>
-					<dd>
-						<div></div>
-					</dd>
-				</dl>
 
-				<dl class="contact_method">
-					<dt>商家联系方式</dt>
-					<dd>
-						<div>电话：18001165184</div>
-						<div>ＱＱ：2448637204</div>
-						<div>微信：lantaosunsea</div>
-						<div>邮箱：wangyu001@lantaochina.com</div>
-					</dd>
-				</dl>
-				<dl class="contact_time">
-					<dt>商家服务时间</dt>
-					<dd>
-						<div>在线时间：上午十点至晚上七点</div>
-						<div class="concat_notice"></div>
-
-						<div class="contact_service">
-
-							<a target="_blank" href="http://m.jifen.qq.com/pc/serviceqq?shopId=2&uin=2448637204&pf=pc.pay.zh" title="怪奇鹅">怪奇鹅</a>
-
-						</div>
-					</dd>
-				</dl>
 
 			</div>
 		</div>
@@ -170,19 +141,16 @@
             },
             success:function (res) {
                 if(res.code === -1){
-                    $("#quantity").val(1);
-
                     return layer.alert(res.msg)
                 }else if(res.code === 1) {
-                    $("#quantity").val(1);
-                    $("#cartNum").html(res.count);
-                    return layer.alert(res.msg)
+                    layer.alert(res.msg,function () {
+                        window.location.reload();  //刷新父级页面
+                    })
                 }
             }
         });
     }
 
-    var cur_action=null;
 
     // 更改数量
     function changeQty(num,goods_id) {

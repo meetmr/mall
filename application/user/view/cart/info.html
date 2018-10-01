@@ -35,10 +35,10 @@
 
 			<div class="order-body">
 				<div class="order-section js_supplier supplier" id="js_supplier-20" data-supplier-id="20"  {if $is == 0} style="display: none;" {else} {/if}>
-						<div class="order-section-header stuckMenu">
-							<a href="{:url('user/order/all')}" type="button" style="background: red;cursor: pointer" class="js_gotoPay btn btn-big btn-green btn-settlement btn-disabled" >去结算</a>
-							<div class="tips"> <span class="product-price"> 共 ￥<span class="num js_price-sum">{$sum_price}</span></span></span></div>
-						</div>
+				<div class="order-section-header stuckMenu">
+					<a onclick="truncate()	" type="button" style="background: red;cursor: pointer" class="js_gotoPay btn btn-big btn-green btn-settlement btn-disabled" >清空购物车</a>
+					<div class="tips"> <span class="product-price"> 共 ￥<span class="num js_price-sum">{$sum_price}</span></span></span></div>
+				</div>
 						<div class="order-section-body order-detail">
 							<table class="order-detail-table">
 								<thead>
@@ -70,13 +70,13 @@
 										<div class="quantity-cover">
 
 											<div class="js_quantity-input js_product-model quantity-input small" >
-												<button type="button" class="reduce">
-													<i class="icon-reduce" onclick='changeQty(0,"{$user_Cart.goods.id}");' ></i>
+												<button onclick='changeQty(0,"{$user_Cart.goods.id}");' type="button" class="reduce">
+													<i class="icon-reduce"  ></i>
 												</button>
 
 												<input type="text" class="quantity-input-tx" onkeyup='change_quantity("m26xlgwkwq",this);' id="quantity{$user_Cart.goods.id}"  disabled value="{$user_Cart.number}"  maxlength="3">
-												<button type="button" class="add">
-													<i class="icon-add" onclick='changeQty(1,"{$user_Cart.goods.id}");' ></i>
+												<button type="button" onclick='changeQty(1,"{$user_Cart.goods.id}");' class="add">
+													<i class="icon-add"  ></i>
 												</button>
 											</div>
 											<span class="tips warn no-stock" style="display: none;">最多只能购买976件</span>
@@ -93,6 +93,11 @@
 								</tbody>
 							</table>
 						</div>
+
+				<div class="order-section-header stuckMenu">
+					<a href="{:url('user/order/all')}" type="button" style="background: #28ac17;cursor: pointer" class="js_gotoPay btn btn-big btn-green btn-settlement btn-disabled" >去结算</a>
+					<div class="tips"> <span class="product-price"> 共 ￥<span class="num js_price-sum">{$sum_price}</span></span></span></div>
+				</div>
 				</div>
 				<div id="cart-empty" class="order-status-tips"  {if $is != 0} style="display: none;" {else} {/if}>
 					<p>您的购物车里空空如也，去逛逛吧~</p>
@@ -104,7 +109,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<div id="cart-command" class="section recommend"  {if $is != 0} style="display: none;" {else} {/if} >
 		<div class="section-header">
@@ -134,16 +138,11 @@
 			</div>
 		</div>
 			{/volist}
-
-
 		</div>
 		</div>
 		</div>
-
-
 	</div>
 </div>
-
 
 <!--尾部-->
 {include file="index@public/footer"}
@@ -225,19 +224,21 @@
     }
 
     function truncate() {
-        $.ajax({
-            url:"{:url('user/Cart/truncate')}",
-            type:"POST",
-            dataType:"json",
-            success:function (res) {
-                if(res.code === -1){
-                    layer.alert(res.msg)
-                    $("#quantity").val(res);
-                }else {
-                    window.location.reload();  //刷新父级页面
+        layer.confirm('确定要清空购物车吗？',function(index){
+            $.ajax({
+                url:"{:url('user/Cart/truncate')}",
+                type:"POST",
+                dataType:"json",
+                success:function (res) {
+                    if(res.code === -1){
+                        layer.alert(res.msg);
+                        $("#quantity").val(res);
+                    }else {
+                        window.location.reload();  //刷新父级页面
+                    }
                 }
-            }
-        });
+            });
+		});
 
     }
 </script>

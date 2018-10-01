@@ -2,7 +2,6 @@
 <html lang="zh-cn">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <title>{$confRes.sitename}</title>
   <meta name="Copyright" content="{$confRes.miaoshu}"/>
   <meta name="Keywords" content="{$confRes.sitename}"/>
@@ -44,8 +43,17 @@
 
     <div id="productListSortCtrl" class="filter">
       <ul>
-        <li data-type="default">
-          <a href="javascript:void(0);">默认排序</a>
+        <li data-type="default" class="current">
+          <a href="" >默认排序</a>
+        </li>
+        <li data-type="time">
+          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'time'))}">新品优先</a>
+        </li>
+        <li data-type="price" >
+          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'desc'))}">价格从低到高</a>
+        </li>
+        <li data-type="price_desc">
+          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'asc'))}" >价格从高到低</a>
         </li>
       </ul>
     </div>

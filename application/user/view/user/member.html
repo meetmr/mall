@@ -7,11 +7,12 @@
 	<meta name="Copyright" content="{$confRes.miaoshu}"/>
 	<meta name="Keywords" content="{$confRes.sitename}"/>
 	<meta name="Description" content="{$confRes.miaoshu}"/>
+	<link rel="stylesheet" type="text/css" href="/static/index/css/page.css">
 	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-error.6583439e.css">
 	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-buy-process.c1a2f440.css">
 	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-personal-order.6f6355da.css">
 	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
-	<script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+	<script src="/static/layer/jquery.min.js"></script>
 	<script src="/static/layer/layer.js"></script>
 </head>
 <body>
@@ -33,9 +34,24 @@
 		<div class="personal-body">
 				{include file="public/mem_menu"}
 			<div class="personal-main">
-				<div class="orders pending">
+
+				<div class="personal-main" {if $count == 0} {else} style="display: none" {/if}>
+					<div class="order-body">
+						<div class="order-status-tips">
+							<p>亲，你暂时没有下单哦，去逛逛吧~</p>
+
+							<div class="buttons choices">
+								<a href="/">
+									<button type="button" class="btn btn-big btn-light-green">去逛逛</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="orders pending" {if $count != 0} {else} style="display: none" {/if}>
 					<div class="orders-header">
-						<p class="orders-header-title">待处理订单</p>
+						<p class="orders-header-title">全部订单</p>
 						<table class="orders-header-table">
 							<thead>
 							<tr>
@@ -47,7 +63,6 @@
 							</thead>
 						</table>
 					</div>
-
 					{volist name="order" id="vo_order"}
 					<div class="order order-detail">
 						<div class="order-header">
@@ -98,7 +113,7 @@
 										{volist name="goods" id="vo_goods"}
 										<?php $goodsss = $vo_goods->goods?><br>
 										<?php $id = ($goodsss->id);?>
-										<img width="50" style="float: left" src="/static/uploads/<?php echo $goodsss->og_thumb?>" alt="<?php echo $address->name;?>">
+										<a href="{:url('index/Goods/index',array('id'=>$id))}" ><img width="50" style="float: left" src="/static/uploads/<?php echo $goodsss->og_thumb?>" alt="<?php echo $address->name;?>"></a>
 										{/volist}
 									</div>
 								</td>
@@ -132,7 +147,6 @@
 									{/case}
 									{default /}默认情况
 									{/switch}
-
 								</td>
 								<td class="order-operate" rowspan="2">
 									{switch $vo_order.status }
@@ -159,7 +173,7 @@
 									{/case}
 									{default /}默认情况
 									{/switch}
-
+									<br><a href="{:url('user/order/show_Order',array('id'=>$vo_order.order_id))}" target="_blank" class="gray">订单详情</a>
 								</td>
 							</tr>
 							</tbody>
@@ -167,7 +181,9 @@
 					</div>
 					{/volist}
 				</div>
-
+				<div class="page">
+					{$order|raw}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -228,22 +244,27 @@
         }, 1000); //每个0.1秒执行一次
     });
     // 取消订单
+
     function cancelOrder(order_id){
-        $.ajax({
-            url:"{:url('user/order/cancelOrder')}",
-            type:"POST",
-            dataType:"json",
-            data:{
-                order_id:order_id
-            },
-            success:function (res) {
-                if(res == 1){
-                    layer.alert('订单取消成功',function () {
-                        window.location.reload();  //刷新父级页面
-                    });
+        layer.confirm('确定要取消此订单吗？',function(index){
+            $.ajax({
+                url:"{:url('user/order/cancelOrder')}",
+                type:"POST",
+                dataType:"json",
+                data:{
+                    order_id:order_id
+                },
+                success:function (res) {
+                    if(res == 1){
+                        layer.alert('订单取消成功',function () {
+                            window.location.reload();  //刷新父级页面
+                        });
+                    }
                 }
-            }
-        });
+            });
+		});
+
+
     }
 </script>
 
