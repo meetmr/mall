@@ -71,7 +71,9 @@
 						<button type="button"  onclick='changeQty(0,"{$goodsInfo.id}");' class="reduce">
 							<i class="icon-reduce"   ></i>
 						</button>
+						<form method="post" action="{:url('index/goods/immediately')}">
 						<input type="text" onkeyup='change_quantity("{$goodsInfo.id}",this);'  name="quantity"  id="quantity" class="quantity-input-tx" value="1">
+						<input type="hidden"   name="g_id"   value="{$goodsInfo.id}">
 						<button type="button" onclick='changeQty(1,"{$goodsInfo.id}");'  class="add">
 							<i class="icon-add" ></i>
 						</button>
@@ -89,7 +91,8 @@
 					{if $goodsInfo.stock != 0}
 					{if $Think.session.user}
 					<a href="javascript:void(0);" id="addToCartButton" onclick="addCatr('{$goodsInfo.id}')" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
-					<a href="javascript:void(0);" id="buyNowButton" class="js_buy-button btn btn-big btn-red buy">立即购买</a>
+					<input type="submit" class="js_buy-button btn btn-big btn-red buy" value="立即购买">
+					<form>
 					<i class="fly-item" id="fly-item"></i>
 					{else}
 					<a href="{:url('user/login/login')}" id="" class="js_buy-button btn btn-big btn-green cart">加入购物车</a>
@@ -128,6 +131,8 @@
 </div>
 
 <script>
+	
+
     // 加入购物车
     function addCatr(goods_id) {
         var quantity = $("#quantity").val();  // 商品数量

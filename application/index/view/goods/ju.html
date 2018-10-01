@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+    <script src="/static/layer/jquery.min.js"></script>
+    <script src="/static/layer/layer.js"></script>
+</head>
+<body>
+<script>
+    $(function () {
+        layer.alert('{$msg}',function () {
+            var url = "{:url('index/Goods/index',array('id'=>$good_id))}";
+            location.href = url;
+        })
+    })
+</script>
+</body>
+</html>

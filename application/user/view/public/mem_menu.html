@@ -7,13 +7,13 @@
                 <a   {if $left == 'order'} class="active" {/if}    href="{:url('user/user/member')}">我的订单</a>
             </li>
             <li>
-                <a class="" href="myfavorite?shopId=2&pf=pc.pay.zh">我喜欢的</a>
+                <a class="" >我喜欢的</a>
             </li>
             <li>
-                <a class="" href="usage?shopId=2&pf=pc.pay.zh">我的积分</a>
+                <a class="" >我的积分</a>
             </li>
             <li>
-                <a class="" href="/pc/cart?shopId=2&pf=pc.pay.zh">我的购物车</a>
+                <a class="" href="{:url('user/cart/info')}" >我的购物车</a>
             </li>
         </ul>
     </div>

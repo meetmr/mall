@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>结算-PHPMall</title>
+	<meta name="Copyright" content="{$confRes.miaoshu}"/>
+	<meta name="Keywords" content="{$confRes.sitename}"/>
+	<meta name="Description" content="{$confRes.miaoshu}"/>
+	<link rel="stylesheet" type="text/css" href="/static/index/css/pc-jifen-cart.89694c91.css"/>
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+	<script src="/static/layer/jquery.min.js"></script>
+	<script src="/static/layer/layer.js"></script>
+</head>
+<body>
+
+<div id="header" class="header">
+	<!--个人状态-->
+	{include file="index@public/topmenu"}
+	<!--个人状态end-->
+	<!--导航栏-->
+	{include file="index@public/topnav"}
+	<!--导航栏end-->
+
+</div>
+
+<div class="content">
+	<div class="order step1">
+		<div class="order-header">
+			<h2 class="title">确认订单</h2>
+
+			<div class="buy-process">
+				<ul class="process-list">
+					<li class="process-item item-1 current">确认订单信息</li>
+					<li class="process-item item-2">支付订单</li>
+				</ul>
+			</div>
+		</div>
+		<div class="order-body">
+				<div id="addressHolder" class="order-section address">
+					<div class="order-section-header">
+						<p class="order-sub-title">  &nbsp;确认收货地址、收货人、联系方式</p>
+					</div>
+					<div class="order-section-body">
+						<div id="noAddressTips" class="empty-address" style="display: none;">
+							<p><i class="icon_warn_red"></i>您还没有添加收货地址，请添加~</p>
+						</div>
+						<ul id="addressList" class="address-list address-manage-list" data-type="rich-radio" style="">
+							{if $is_add !=0}
+							{volist name="userAddress" id="vo_userAddress"}
+							<li class="address-item">
+								&nbsp;&nbsp;<input type="radio" id="address" name="address" checked value="{$vo_userAddress.id}" title="{$vo_userAddress.detailed}">&nbsp;({$vo_userAddress.name}){$vo_userAddress.detailed}-{$vo_userAddress.province}<br><hr>
+								<input type="hidden" value="{$is_add}" id="address_is">
+							</li>
+							{/volist}
+							{else}
+							<div class="order-section-footer" style="margin-top: 2em">
+								<a style="cursor: pointer" id="addAddressButton" class="add-address"  onclick="x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600)">
+									<i class="icon-plus"></i>
+									<span>新增收货地址</span>
+								</a>
+							</div>
+							{/if}
+						</ul>
+					</div>
+
+				</div>
+				<div class="order-section order-detail">
+					<table class="order-detail-table">
+						<thead>
+						<tr>
+							<th class="supplier">信息</th>
+							<th class="supplier">名称</th>
+							<th class="unit-price">单价（元）</th>
+							<th class="amount">数量</th>
+							<th class="total">小计（元）</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr data-type="item">
+							<td>
+								<input type="hidden" value="{$goods.id}" id="goods_id">
+								<input type="hidden" value="{$num}" id="num">
+								<div class="product cf">
+									<a class="product-img" href="{:url('index/Goods/index',array('id'=>$goods.id))}">
+										<img src="/static/uploads/{$goods.og_thumb}" alt="{$goods.goods_name}">
+									</a>
+								</div>
+							</td>
+							<td>
+								<div class="product-intro">
+									<a class="product-name" href="{:url('index/Goods/index',array('id'=>$goods.id))}" target="_blank">{$goods.goods_name}</a>
+								</div>
+							</td>
+							<td style="padding-left: 40px;">￥<span class="js_realPrice_0 num">{$goods.shop_price}</span></td>
+							<td style="padding-left: 110px;"><span class="num">{$num}</span></td>
+
+							<td style="padding-left: 60px;">￥<span class="js_totalFee_0 num">{$sum_price}</span>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+
+					<div class="order-total-cost-wrap cf">
+						<div class="order-total-cost">
+							<div class="cost-item">
+								<span class="key" title="">实付款（含运费）</span>
+								<span class="value total">￥<span id="orderTotalFee" class="num">{$sum_price}</span></span>
+							</div>
+						</div>
+					</div>
+					<div class="pay r cf">
+						<div class="pay-way">
+							<span>支付方式：</span>
+							<div class="label_area selected">
+								<label class="label_radio wechat r_on">
+									<input class="hide" type="radio" checked="checked" value="wechat-buy" name="payMethod"><i class="icon_wechat"></i>微信支付
+								</label>
+								<i class="icon_square_checkbox"></i>
+							</div>
+						</div>
+					</div>
+
+					<input name="shopId" type="hidden" value="2">
+
+					<div class="commit">
+						<button  onclick="order()" type="button" class="btn btn-big btn-green">确认</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>
+
+<!--尾部-->
+{include file="index@public/footer"}
+<!--尾部end-->
+
+<script type="text/javascript" src="/static/index/js/c22559310a7b450cbe60c70169dd1d6f.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/index/js/midaslogdata.3586e7e2.js"></script>
+<script type="text/javascript" src="/static/index/js/cart.15ad37ae.js"></script>
+
+
+<script>
+    function x_admin_show(title,url,w,h){
+        if (title == null || title == '') {
+            title=false;
+        };
+        if (url == null || url == '') {
+            url="404.html";
+        };
+        if (w == null || w == '') {
+            w=($(window).width()*0.9);
+        };
+        if (h == null || h == '') {
+            h=($(window).height() - 50);
+        };
+        layer.open({
+            type: 2,
+            area: [w+'px', h +'px'],
+            fix: false, //不固定
+            maxmin: true,
+            shadeClose: true,
+            shade:0.4,
+            title: title,
+            content: url
+        });
+    }
+    function order() {
+        var address_is = $("#address_is").val();
+        if(address_is == 0){
+            layer.alert('请添加收获地址后再尝试下单',function () {
+                layer.msg('加载中');
+                x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600);
+            });
+            return;
+        }
+        // 获取手机地址
+        var addressID = $("input[name='address']:checked").val();
+        var goods_id = $("#goods_id").val();
+        var num = $("#num").val();
+
+        $.ajax({
+            url:"{:url('index/goods/order')}",
+            type:"POST",
+            dataType:"json",
+            data:{
+                addressID:addressID,
+                goods_id:goods_id,
+                num:num
+            },
+            success:function (res) {
+                if(res.code == -1){
+                    layer.alert(res.msg,function () {
+                        layer.msg('加载中');
+                        x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600);
+                    })
+                }else if(res.code == 1){
+                    layer.alert('下单成功！请支付',function () {
+                        var url = "/show_order/"+res.orderId+".html";
+                        location.href = url;
+                    })
+                }else if(res.code == -2){
+                    layer.alert(res.msg,function () {
+                        location.href = "/";
+                    })
+                }else if(res.code == -5){
+                    layer.alert(res.msg)
+                    return ;
+                }
+            }
+        });
+
+    }
+
+</script>
+
+</body>
+</html>

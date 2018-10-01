@@ -45,3 +45,4 @@ Route::get('show_order/:id','user/order/showOrder',['ext'=>'html|htm']);
 
 Route::get('showOrder/:id','user/order/show_Order',['ext'=>'html|htm']);
 
+Route::post('now','index/goods/immediately',['ext'=>'html|htm']);

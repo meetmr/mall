@@ -93,6 +93,7 @@ class Order extends BaseController
             foreach ($userCart as $item){
                 $item['goods'] = Goods::getGoodsInfo($item['g_id'])->toArray();
             }
+
             // 订单号
             $order['order_id'] = get_order();
             // 获取用户收获地址
