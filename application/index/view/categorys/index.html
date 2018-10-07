@@ -43,17 +43,17 @@
 
     <div id="productListSortCtrl" class="filter">
       <ul>
-        <li data-type="default" class="current">
-          <a href="" >默认排序</a>
+        <li data-type="default"  {if $order == ""} class="current"{/if}>
+          <a href="{:url('index/Categorys/index',array('id'=>$id))}" >默认排序</a>
         </li>
-        <li data-type="time">
+        <li data-type="time"  {if $order=="time"} class="current"{/if} >
           <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'time'))}">新品优先</a>
         </li>
-        <li data-type="price" >
-          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'desc'))}">价格从低到高</a>
+        <li data-type="price" {if $order=="asc"} class="current"{/if} >
+          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'asc'))}">价格从低到高</a>
         </li>
-        <li data-type="price_desc">
-          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'asc'))}" >价格从高到低</a>
+        <li data-type="price_desc" {if $order=="desc"} class="current"{/if} >
+          <a href="{:url('index/Categorys/index',array('id'=>$id,'order'=>'desc'))}" >价格从高到低</a>
         </li>
       </ul>
     </div>

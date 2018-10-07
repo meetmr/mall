@@ -16,7 +16,7 @@ class Categorys extends BaseController
     public function index($id,$order = ''){
         // 获取顶级分类
         $classification = Category::getGoodsCategoryInfoDingji($id);
-        $goods = Goods::getCategoryGoods($id);
+        $goods = Goods::getCategoryGoods($id,$order);
         $top_level= $classification['dj'];
         unset($classification['dj']);
         $count = $goods->count();
@@ -25,7 +25,8 @@ class Categorys extends BaseController
             'top_level'        =>    $top_level,
             'id'               =>    $id,
             'goods'            =>    $goods,
-            'count'           =>    $count
+            'count'            =>    $count,
+            'order'           =>    $order
         ]);
         return $this->fetch();
     }

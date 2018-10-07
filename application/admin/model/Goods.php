@@ -106,7 +106,7 @@ class Goods extends BaseModel
     }
 
     // 跟据分类ID 查询分类下面的商品
-    public static function getCategoryGoods($c_id = 0){
+    public static function getCategoryGoods($c_id = 0,$order){
         // 0 表示所有的商品
         if($c_id == 0){
             $goods = self::where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->select();
@@ -121,7 +121,22 @@ class Goods extends BaseModel
             $Category = new Category();
             $ids = $catetree->childrenids($c_id,$Category);
             $ids[] = $c_id;
-            $goods = self::where(['on_sale'=>1])->where(['is_delete'=>1])->where('category_id','in',$ids)->field('id,goods_name,og_thumb,shop_price')->select();
+            if($order == 'asc'){
+                $shux = 'shop_price';
+                $order = 'asc';
+            }else if($order == 'desc'){
+                $shux = 'shop_price';
+                $order = 'desc';
+            }else if($order = 'time'){
+                $shux = 'id';
+                $order = 'desc';
+            }
+            if($order){
+                $goods = self::where(['on_sale'=>1])->where(['is_delete'=>1])->where('category_id','in',$ids)->order( $shux.' '.$order)->field('id,goods_name,og_thumb,shop_price')->select();
+            }else{
+                $goods = self::where(['on_sale'=>1])->where(['is_delete'=>1])->where('category_id','in',$ids)->field('id,goods_name,og_thumb,shop_price')->select();
+
+            }
             foreach ($goods as $item) {
                 // 查询商品相册
                 $item['images'] = getGoodsImg($item['id']);
