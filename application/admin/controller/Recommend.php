@@ -12,6 +12,10 @@ use app\admin\model\Recommend as RecommendModel;
 use think\facade\Request;
 class Recommend extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     // 展示列表
     public function index(){
         $recommends = RecommendModel::order('id desc')->select();

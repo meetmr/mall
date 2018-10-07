@@ -14,6 +14,10 @@ use app\admin\validate\BrandValidate;
 use think\facade\Request;
 class Brand extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     //品牌列表
     public function index(){
         //获取品牌列表

@@ -14,6 +14,10 @@ use app\admin\validate\ArticleValidate;
 use think\facade\Request;
 class Article extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     //渲染列表
     public function index(){
         $articleInfo = ArticleModel::with('Cate')->paginate(10);

@@ -11,6 +11,10 @@ namespace app\admin\controller;
 use think\facade\Request;
 class System extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     //图片列表
     public function imgList(){
         define('UEDIOOR',__DIR__.'/../../../public/ueditor/upload/image');

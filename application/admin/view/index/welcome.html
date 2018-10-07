@@ -2,7 +2,7 @@
     <body>
     <div class="x-body layui-anim layui-anim-up">
         <blockquote class="layui-elem-quote">欢迎管理员：
-            <span class="x-red">Admin</span>！当前时间:2018-04-25 20:50:53</blockquote>
+            <span class="x-red">{$Think.session.admin.username}</span></blockquote>
         <fieldset class="layui-elem-field">
             <legend>数据统计</legend>
             <div class="layui-field-box">
@@ -15,18 +15,18 @@
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>商品总数</h3>
-                                                <p><cite>12</cite></p></a>
+                                                <p><cite>{$count.goodsCount}</cite></p></a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>用户总数</h3>
-                                                <p><cite>66</cite></p>
+                                                <p><cite>{$count.userCount}</cite></p>
                                             </a>
                                         </li>
                                         <li class="layui-col-xs2">
                                             <a href="javascript:;" class="x-admin-backlog-body">
                                                 <h3>订单总数</h3>
-                                                <p><cite>67</cite></p>
+                                                <p><cite>{$count.orderCount}</cite></p>
                                             </a>
                                         </li>
                                     </ul>

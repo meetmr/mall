@@ -12,6 +12,10 @@ use app\admin\model\User as UserModel;
 use app\admin\model\Order;
 class User extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     public function info(){
         $users = UserModel::order('id desc')->select();
         $this->assign([

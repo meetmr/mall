@@ -14,6 +14,10 @@ use app\admin\model\Recommend;
 use app\admin\model\Category;
 class Goods extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
 //    后台展示例表
     public function index(){
         // 获取商品列表

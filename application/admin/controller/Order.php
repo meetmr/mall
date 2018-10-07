@@ -15,6 +15,10 @@ use app\admin\model\Logistics;
 
 class Order extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     public function info($status = 0){
         if($status == 0){
             $orders = OrderModel::order('id desc')->paginate(15);

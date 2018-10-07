@@ -15,6 +15,10 @@ use think\facade\Request;
 
 class Cate extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     //渲染列表
     public function index(){
         $cate = new Catetree();

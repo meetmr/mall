@@ -13,6 +13,10 @@ use think\facade\Request;
 use app\admin\validate\LinkValidate;
 class Link extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     //渲染友情链接
     public function index(){
         $linkInfo = LinkModel::paginate(10);

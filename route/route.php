@@ -46,3 +46,7 @@ Route::get('show_order/:id','user/order/showOrder',['ext'=>'html|htm']);
 Route::get('showOrder/:id','user/order/show_Order',['ext'=>'html|htm']);
 
 Route::post('now','index/goods/immediately',['ext'=>'html|htm']);
+
+// 管理员登陆
+Route::get('admin/login','admin/login/login',['ext'=>'html|htm']);
+Route::get('admin/lou','admin/login/outLogin',['ext'=>'html|htm']);

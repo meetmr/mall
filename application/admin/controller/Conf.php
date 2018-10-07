@@ -13,6 +13,10 @@ use app\admin\validate\ConfValidate;
 use app\admin\model\Conf as ConfModel;
 class Conf extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     public function confList(){
         if(Request::isPost()){
             $data = Request::post();

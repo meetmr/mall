@@ -13,6 +13,10 @@ use app\admin\model\Goods;
 use app\admin\model\Broadcast as BroadcastModel;
 class Broadcast extends BaseController
 {
+    protected $beforeActionList = [
+        'isLogin',
+    ];
+
     // 轮播图列表
     public function info(){
         $broadcasts = BroadcastModel::order('id desc')->select();
