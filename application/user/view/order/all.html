@@ -49,7 +49,7 @@
 							{if $is_add !=0}
 							{volist name="userAddress" id="vo_userAddress"}
 							<li class="address-item">
-								&nbsp;&nbsp;<input type="radio" id="address" name="address" checked value="{$vo_userAddress.id}" title="{$vo_userAddress.detailed}">&nbsp;({$vo_userAddress.name}){$vo_userAddress.detailed}-{$vo_userAddress.province}<br><hr>
+								&nbsp;&nbsp;<input type="radio" id="address" name="address"  value="{$vo_userAddress.id}" title="{$vo_userAddress.detailed}">&nbsp;({$vo_userAddress.name}){$vo_userAddress.detailed}-{$vo_userAddress.province}<br><hr>
 								<input type="hidden" value="1" id="address_is">
 							</li>
 							{/volist}
@@ -175,7 +175,7 @@
             });
             return;
         }
-        // 获取手机地址
+        // 获取地址
         var addressID = $("input[name='address']:checked").val();
         $.ajax({
             url:"{:url('user/order/order')}",
