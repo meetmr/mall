@@ -59,6 +59,13 @@ class Order extends BaseController
     public function order(){
         if(Request::isAjax()){
             $data = Request::post();
+            if(!$data){
+                $state = [
+                    'code'  =>  -5,
+                    'msg'   =>  '请选择一个收获地址！'
+                ];
+                return json($state);
+            }
             //判断是否有收获地址
             $userAddress = User::getUserAddress(session('user.id'))->count();
             if(!$userAddress){

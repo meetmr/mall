@@ -58,6 +58,7 @@
 								<a style="cursor: pointer" id="addAddressButton" class="add-address"  onclick="x_admin_show('物流信息','{:url(\'user/user/addAddress\')}',600,600)">
 									<i class="icon-plus"></i>
 									<span>新增收货地址</span>
+									<input type="hidden" value="0" id="address_is">
 								</a>
 							</div>
 							{/if}
@@ -167,6 +168,7 @@
         });
     }
     function order() {
+
         var address_is = $("#address_is").val();
         if(address_is == 0){
             layer.alert('请添加收获地址后再尝试下单',function () {
