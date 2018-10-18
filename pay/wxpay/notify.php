@@ -15,11 +15,13 @@ class Notify extends Base
         //验证签名
         if( $this->checkSign($arr)){
             \think\Db::table('tp_order')->where(['order_id'=>$arr['out_trade_no']])->update(['status'=>11]);
-
             //验证订单金额
             if($this->checkPrice($arr)){
                 //更新订单状态
                   \think\Db::table('tp_order')->where(['order_id'=>$arr['out_trade_no']])->update(['status'=>2]);
+                $sum_money = \think\Db::table('tp_base')->where(['id'=>1])->value('sum_money');
+                $sum_money += $arr['total_fee'] / 100;
+                 \think\Db::table('tp_base')->where(['id'=>1])->update(['sum_money'=>$sum_money]);
                 $this->logs('log.txt', '2');
                 $params = [
                     'return_code'    => 'SUCCESS',

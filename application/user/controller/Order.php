@@ -106,7 +106,7 @@ class Order extends BaseController
             $order['payment'] = $sum_price;
             $order['user_id'] = session('user.id');
             $order['goods_item'] = json_encode($userCart);
-            $order['close_time'] = time() + 10;
+            $order['close_time'] = time() + 1800;
             $info = OrderModel::create($order);
             if($info){
                 Cart::where(['u_id'=>$user_id])->delete();
