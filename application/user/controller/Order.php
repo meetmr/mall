@@ -127,7 +127,7 @@ class Order extends BaseController
         }
     }
     public function showOrder($id){
-        $order = OrderModel::where(['order_id'=>$id])->where(['status'=>1])->find();
+        $order = OrderModel::where(['order_id'=>intval($id)])->where(['status'=>1])->find();
        if(!$order){
            return $this->redirect('/');
        }

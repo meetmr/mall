@@ -17,6 +17,7 @@ use app\admin\model\Article;
 use app\admin\model\Cart as CartModel;
 use app\admin\model\Broadcast;
 use app\admin\model\Order;
+use think\facade\Cache;
 class BaseController extends Controller
 {
     public function initialize()
@@ -94,7 +95,12 @@ class BaseController extends Controller
 
     // 获取轮播图
     public function getBroadcast(){
-        $roadcast = Broadcast::order('id desc')->select();
+        if(Cache::has('getBroadcast')){
+            $roadcast = Cache::get('getBroadcast');
+        }else{
+            $roadcast = Broadcast::order('id desc')->select();
+            Cache::set('getBroadcast',$roadcast);
+        }
         $this->assign([
             'roadcast' =>  $roadcast
         ]);

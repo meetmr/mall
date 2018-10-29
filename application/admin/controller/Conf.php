@@ -21,7 +21,6 @@ class Conf extends BaseController
         if(Request::isPost()){
             $data = Request::post();
             unset($data['file']);
-
             //复选框空选问题
             $chec_felds2d = ConfModel::field('ename')->where(['form_type'=>'checkbox'])->select();
             $chec_felds1d = [];
@@ -112,5 +111,10 @@ class Conf extends BaseController
             $res = ConfModel::where(['id'=>$id])->delete();
             return $this->__return($res);
         }
+    }
+
+    // 数据库备份
+    public function databaseBackup(){
+
     }
 }

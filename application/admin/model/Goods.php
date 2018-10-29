@@ -14,6 +14,7 @@ use app\admin\model\Product;
 use app\admin\model\GoodsImg;
 use catetree\Catetree;
 use app\admin\model\Category;
+use think\facade\Cache;
 class Goods extends BaseModel
 {
     protected  $field = true;
@@ -155,16 +156,22 @@ class Goods extends BaseModel
 
     // 传入商品id、获取商品全部信息。
     public static function getGoodsInfo($goods_id){
-        $goodsInfo = self::where(['on_sale'=>1])->where(['is_delete'=>1])->where(['id'=>$goods_id])->find();
-        if(!$goodsInfo){
-            echo "<script>location.href='/'</script>";
+        if(Cache::has('getGoodsInfo')){
+            $goodsInfo = Cache::get('getGoodsInfo');
+        }else{
+            $goodsInfo = self::where(['on_sale'=>1])->where(['is_delete'=>1])->where(['id'=>$goods_id])->find();
+            if(!$goodsInfo){
+                echo "<script>location.href='/'</script>";
+            }
+            // 查询商品相册
+            $goodsInfo['images'] =  getGoodsImg($goodsInfo['id']);
+            // 获取商品属性
+            $goodsInfo['product'] = Product::getGoodsProduct($goodsInfo['id']);
+            // 商品的商品分类信息
+            $goodsInfo['category'] = Category::getGoodsCategoryInfo($goodsInfo['category_id']);
+            Cache::set('getGoodsInfo',$goodsInfo);
         }
-        // 查询商品相册
-        $goodsInfo['images'] =  getGoodsImg($goodsInfo['id']);
-        // 获取商品属性
-        $goodsInfo['product'] = Product::getGoodsProduct($goodsInfo['id']);
-        // 商品的商品分类信息
-        $goodsInfo['category'] = Category::getGoodsCategoryInfo($goodsInfo['category_id']);
+
         return $goodsInfo;
     }
 
@@ -189,32 +196,50 @@ class Goods extends BaseModel
 
     // 获取人气热销分类下的商品
     public static function getHotSale($count){
-        $goods =  self::where(['recommend_id'=>11])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
-        foreach ($goods as $item) {
-            $item['images'] = getGoodsImg($item['id']);
-            // 查询商品相册
+        if(Cache::has('getHotSale')){
+            $goods = Cache::get('getHotSale');
+        }else{
+            $goods =  self::where(['recommend_id'=>11])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+            foreach ($goods as $item) {
+                $item['images'] = getGoodsImg($item['id']);
+                // 查询商品相册
+            }
+            Cache::set('getHotSale',$goods);
         }
+
         return $goods;
     }
 
     // 获取新品尝鲜分类下的商品
     public static function getNewProductGoods($count){
-        $goods =  self::where(['recommend_id'=>12])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
-        foreach ($goods as $item) {
-            $item['images'] = getGoodsImg($item['id']);
-            // 查询商品相册
+        if(Cache::has('getNewProductGoods')){
+            $goods = Cache::get('getNewProductGoods');
+        }else{
+            $goods =  self::where(['recommend_id'=>12])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+            foreach ($goods as $item) {
+                $item['images'] = getGoodsImg($item['id']);
+                // 查询商品相册
+            }
+            Cache::set('getNewProductGoods',$goods);
         }
         return $goods;
     }
 
     // 获取为你推荐分类下的商品
     public static function getRecommendGoods($count){
-        $goods =  self::where(['recommend_id'=>13])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
-        foreach ($goods as $item) {
-            $item['images'] = getGoodsImg($item['id']);
-            // 查询商品相册
+        if(Cache::has('getRecommendGoods')){
+            $goods = Cache::get('getRecommendGoods');
+        }else{
+            $goods =  self::where(['recommend_id'=>13])->where(['on_sale'=>1])->where(['is_delete'=>1])->field('id,goods_name,og_thumb,shop_price')->limit($count)->select();
+            foreach ($goods as $item) {
+                $item['images'] = getGoodsImg($item['id']);
+                // 查询商品相册
+            }
+            Cache::set('getRecommendGoods',$goods);
         }
+
         return $goods;
+
     }
 
     // 获取为购物车推荐的商品

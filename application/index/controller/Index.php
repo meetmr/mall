@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\admin\model\Goods;
+use think\facade\Cache;
 class Index extends BaseController
 {
     public function index()
@@ -42,5 +43,8 @@ class Index extends BaseController
     // 获取为你推荐商品
     public static function getRecommendGoods($count){
         return Goods::getRecommendGoods($count);
+    }
+    public function redis(){
+
     }
 }

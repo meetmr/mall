@@ -9,7 +9,7 @@
 namespace app\admin\model;
 
 use catetree\Catetree;
-
+use think\facade\Cache;
 class Category extends BaseModel
 {
       public static function getInfoCategory(){
@@ -30,10 +30,16 @@ class Category extends BaseModel
 
     // 生成产品分类二级
     public static function getCategoryErJi(){
-        $goods =  self::where('pid','=',0)->field('id,cate_name')->select();
-        foreach ($goods as $good){
-            $good['erji'] = self::where('pid','=',$good['id'])->field('id,cate_name')->select();
+        if(Cache::has('getCategoryErJi')){
+            $goods = Cache::get('getCategoryErJi');
+        }else{
+            $goods =  self::where('pid','=',0)->field('id,cate_name')->select();
+            foreach ($goods as $good){
+                $good['erji'] = self::where('pid','=',$good['id'])->field('id,cate_name')->select();
+            }
+            Cache::set('getCategoryErJi',$goods);
         }
+
         return $goods;
     }
     // 传入分类id、获取商品分类名称
